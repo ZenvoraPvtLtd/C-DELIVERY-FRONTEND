@@ -1,0 +1,58 @@
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  border-radius: var(--radius-full);
+  padding: 0.125rem var(--spacing-2) 0.125rem var(--spacing-1);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+
+.indicator {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+}
+
+.waiting {
+  background-color: var(--color-background);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+}
+.waiting .indicator { background-color: var(--color-text-muted); }
+
+.assigned {
+  background-color: #DBEAFE;
+  color: #1D4ED8;
+  border: 1px solid #BFDBFE;
+}
+.assigned .indicator { background-color: #3B82F6; }
+
+.active {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary-hover);
+  border: 1px solid var(--color-primary);
+}
+.active .indicator { background-color: var(--color-primary); }
+
+.success {
+  background-color: #DCFCE7;
+  color: var(--color-success);
+  border: 1px solid #86EFAC;
+}
+.success .indicator { background-color: var(--color-success); }
+
+.warning {
+  background-color: #FEF3C7;
+  color: var(--color-warning);
+  border: 1px solid #FDE047;
+}
+.warning .indicator { background-color: var(--color-warning); }
+
+.danger {
+  background-color: #FEE2E2;
+  color: var(--color-danger);
+  border: 1px solid #FCA5A5;
+}
+.danger .indicator { background-color: var(--color-danger); }
