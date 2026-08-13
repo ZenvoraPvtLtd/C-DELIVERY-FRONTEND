@@ -4,7 +4,7 @@ import { FailedDeliveryFilters, FailedDeliveryMetrics } from '@/types/tracking';
 import { mockDeliveries } from '@/services/deliveries/deliveryMockData';
 import { AuditActor } from '@/types/audit';
 
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, 0));
 
 export const mockFailedDeliveryRepository: IFailedDeliveryRepository = {
   async getFailedDeliveries(filters: FailedDeliveryFilters, page: number = 1, limit: number = 10): Promise<PaginatedDeliveries> {
