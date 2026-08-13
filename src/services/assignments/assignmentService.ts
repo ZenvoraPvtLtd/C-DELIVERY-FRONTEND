@@ -1,11 +1,20 @@
 import { DeliveryOrder, PaginatedDeliveries } from '@/types/delivery';
-import { AssignmentFilters, AssignmentValidationResult } from '@/types/assignment';
+import { AssignmentFilters, AssignmentValidationResult, AssignmentWorkspaceFilters, AssignmentMetrics } from '@/types/assignment';
 import { DeliveryPartner } from '@/types/partner';
 import { repositoryFactory } from '@/repositories';
 import { AuditActor } from '@/types/audit';
 import { appEvents } from '@/lib/events';
 
 export const assignmentService = {
+  async getAllAssignments(filters: AssignmentWorkspaceFilters, page: number = 1, limit: number = 10): Promise<PaginatedDeliveries> {
+    const repo = repositoryFactory.getAssignmentRepository();
+    return repo.getAllAssignments(filters, page, limit);
+  },
+
+  async getAssignmentMetrics(): Promise<AssignmentMetrics> {
+    const repo = repositoryFactory.getAssignmentRepository();
+    return repo.getAssignmentMetrics();
+  },
   async getPendingAssignments(filters: AssignmentFilters, page: number = 1, limit: number = 10): Promise<PaginatedDeliveries> {
     const repo = repositoryFactory.getAssignmentRepository();
     return repo.getPendingAssignments(filters, page, limit);
@@ -36,3 +45,4 @@ export const assignmentService = {
     return result;
   }
 };
+

@@ -1,6 +1,6 @@
 import { IAssignmentRepository } from '../interfaces/IAssignmentRepository';
 import { DeliveryOrder, PaginatedDeliveries } from '@/types/delivery';
-import { AssignmentFilters, AssignmentValidationResult } from '@/types/assignment';
+import { AssignmentFilters, AssignmentValidationResult, AssignmentWorkspaceFilters, AssignmentMetrics } from '@/types/assignment';
 import { DeliveryPartner } from '@/types/partner';
 import { AuditActor } from '@/types/audit';
 import { apiClient } from '@/lib/api/apiClient';
@@ -9,6 +9,13 @@ import { DeliveryDTO, TimelineDTO, AssignmentHistoryDTO, PartnerDTO, AssignDeliv
 import { mapDeliveryDtoToDomain, mapPartnerDtoToDomain } from '@/lib/api/mappers';
 
 export const apiAssignmentRepository: IAssignmentRepository = {
+  async getAllAssignments(filters: AssignmentWorkspaceFilters, page: number = 1, limit: number = 10): Promise<PaginatedDeliveries> {
+    throw new Error('Not implemented for API yet');
+  },
+
+  async getAssignmentMetrics(): Promise<AssignmentMetrics> {
+    throw new Error('Not implemented for API yet');
+  },
   async getPendingAssignments(filters: AssignmentFilters, page: number = 1, limit: number = 10): Promise<PaginatedDeliveries> {
     const params = new URLSearchParams({
       page: page.toString(),
@@ -96,3 +103,4 @@ export const apiAssignmentRepository: IAssignmentRepository = {
     return mapDeliveryDtoToDomain(response.data.delivery, response.data.timeline, response.data.assignments);
   }
 };
+
