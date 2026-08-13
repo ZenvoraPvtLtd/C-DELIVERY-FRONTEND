@@ -53,14 +53,18 @@ export function ActiveDeliveriesTable({
   }, [data]);
 
   const mapVariant = (v: string): 'active' | 'warning' | 'success' | 'danger' | 'waiting' | 'assigned' => {
-     if(v === 'active') return 'active';
-     if(v === 'warning') return 'warning';
+     if(v === 'WAITING_FOR_ASSIGNMENT') return 'waiting';
+     if(v === 'ASSIGNED') return 'assigned';
+     if(v === 'PICKED_UP') return 'warning';
+     if(v === 'DELIVERED') return 'success';
+     if(v === 'FAILED') return 'danger';
      return 'active';
   };
 
   const getStatusVariant = (status: string) => {
     switch (status) {
-      case 'ASSIGNED': return 'active';
+      case 'WAITING_FOR_ASSIGNMENT': return 'waiting';
+      case 'ASSIGNED': return 'assigned';
       case 'PICKED_UP': return 'warning';
       case 'OUT_FOR_DELIVERY': return 'active'; 
       default: return 'active';

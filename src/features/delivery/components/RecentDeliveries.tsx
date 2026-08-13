@@ -12,13 +12,15 @@ interface RecentDeliveriesProps {
 export function RecentDeliveries({ deliveries }: RecentDeliveriesProps) {
   const router = useRouter();
 
-  const getVariant = (status: string) => {
-    switch(status) {
-      case 'DELIVERED': return 'success';
-      case 'FAILED': return 'danger';
+  const getStatusVariant = (status: string) => {
+    switch (status) {
       case 'WAITING_FOR_ASSIGNMENT': return 'waiting';
       case 'ASSIGNED': return 'assigned';
-      case 'OUT_FOR_DELIVERY': return 'warning';
+      case 'PICKED_UP': return 'warning';
+      case 'OUT_FOR_DELIVERY': return 'active'; 
+      case 'DELIVERED': return 'success';
+      case 'FAILED': return 'danger';
+      case 'CANCELLED': return 'danger';
       default: return 'active';
     }
   };
@@ -56,7 +58,7 @@ export function RecentDeliveries({ deliveries }: RecentDeliveriesProps) {
                   <td style={{ padding: 'var(--spacing-3) var(--spacing-4)', fontSize: 'var(--font-size-sm)', fontWeight: 500, color: 'var(--color-primary-hover)' }}>{delivery.orderId}</td>
                   <td style={{ padding: 'var(--spacing-3) var(--spacing-4)', fontSize: 'var(--font-size-sm)', color: 'var(--color-text)' }}>{delivery.partner || <span style={{color: 'var(--color-text-muted)'}}>Unassigned</span>}</td>
                   <td style={{ padding: 'var(--spacing-3) var(--spacing-4)' }}>
-                    <StatusBadge status={getLabel(delivery.status)} variant={getVariant(delivery.status)} />
+                    <StatusBadge status={getLabel(delivery.status)} variant={getStatusVariant(delivery.status)} />
                   </td>
                   <td style={{ padding: 'var(--spacing-3) var(--spacing-4)', fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>{delivery.time}</td>
                 </tr>

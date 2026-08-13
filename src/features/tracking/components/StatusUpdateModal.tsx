@@ -23,7 +23,8 @@ export function StatusUpdateModal({ order, transition, onClose, onSuccess }: Sta
   if (!order || !transition) return null;
 
   const mapVariant = (v: string): 'active' | 'warning' | 'success' | 'danger' | 'waiting' | 'assigned' => {
-     if(v === 'ASSIGNED') return 'active';
+     if(v === 'WAITING_FOR_ASSIGNMENT') return 'waiting';
+     if(v === 'ASSIGNED') return 'assigned';
      if(v === 'PICKED_UP') return 'warning';
      if(v === 'DELIVERED') return 'success';
      if(v === 'FAILED') return 'danger';
