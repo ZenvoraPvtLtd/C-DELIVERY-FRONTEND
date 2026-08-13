@@ -67,4 +67,21 @@ export let mockDeliveries: DeliveryOrder[] = [
     timeline: [createTimelineEvent('WAITING_FOR_ASSIGNMENT', 2880), createTimelineEvent('ASSIGNED', 2860), createTimelineEvent('PICKED_UP', 2840), createTimelineEvent('OUT_FOR_DELIVERY', 2800), createTimelineEvent('FAILED', 2700, 'Customer unavailable - Door was locked, no answer on phone.')],
     assignmentHistory: [createAssignment('ORD-8902', '1', 2860, 'CLOSED', 2700, 'Delivery Failed')]
   }
+  ,
+  {
+    id: 'd11', orderId: 'ORD-8903', customerName: 'Arjun Rampal', customerPhone: '+919876543011', deliveryAddress: 'Juhu Beach, Mumbai', orderAmount: 550.00, orderDate: getPastDate(150), priority: 'MEDIUM', status: 'FAILED', partnerId: '2', assignedAt: getPastDate(140), pickupAt: getPastDate(120), outForDeliveryAt: getPastDate(90), failedAt: getPastDate(30), failureReason: 'Incorrect Address', failureNotes: 'Customer address is incomplete.', failureStatus: 'OPEN', attemptCount: 1,
+    timeline: [createTimelineEvent('WAITING_FOR_ASSIGNMENT', 150), createTimelineEvent('ASSIGNED', 140), createTimelineEvent('PICKED_UP', 120), createTimelineEvent('OUT_FOR_DELIVERY', 90), createTimelineEvent('FAILED', 30, 'Incorrect Address - Customer address is incomplete.')],
+    assignmentHistory: [createAssignment('ORD-8903', '2', 140)]
+  },
+  {
+    id: 'd12', orderId: 'ORD-8904', customerName: 'Kareena Kapoor', customerPhone: '+919876543012', deliveryAddress: 'Pali Hill, Bandra', orderAmount: 2100.00, orderDate: getPastDate(480), priority: 'HIGH', status: 'FAILED', partnerId: '3', assignedAt: getPastDate(460), pickupAt: getPastDate(430), outForDeliveryAt: getPastDate(400), failedAt: getPastDate(300), failureReason: 'Partner Unable To Deliver', failureNotes: 'Vehicle broke down.', failureStatus: 'INVESTIGATING', internalNotes: 'Contacted partner, waiting for update.', attemptCount: 1,
+    timeline: [createTimelineEvent('WAITING_FOR_ASSIGNMENT', 480), createTimelineEvent('ASSIGNED', 460), createTimelineEvent('PICKED_UP', 430), createTimelineEvent('OUT_FOR_DELIVERY', 400), createTimelineEvent('FAILED', 300, 'Partner Unable To Deliver - Vehicle broke down.')],
+    assignmentHistory: [createAssignment('ORD-8904', '3', 460)]
+  },
+  {
+    id: 'd13', orderId: 'ORD-8905', customerName: 'Shahrukh Khan', customerPhone: '+919876543013', deliveryAddress: 'Mannat, Bandra', orderAmount: 8500.00, orderDate: getPastDate(2880), priority: 'HIGH', status: 'FAILED', partnerId: '4', assignedAt: getPastDate(2860), pickupAt: getPastDate(2840), outForDeliveryAt: getPastDate(2800), failedAt: getPastDate(2700), failureReason: 'Customer Cancelled', failureNotes: 'Customer cancelled at door.', failureStatus: 'RESOLVED', resolution: 'Order Cancelled', resolvedAt: getPastDate(2600), attemptCount: 2, lastAttemptAt: getPastDate(2700),
+    timeline: [createTimelineEvent('WAITING_FOR_ASSIGNMENT', 2880), createTimelineEvent('ASSIGNED', 2860), createTimelineEvent('PICKED_UP', 2840), createTimelineEvent('OUT_FOR_DELIVERY', 2800), createTimelineEvent('FAILED', 2700, 'Customer Cancelled - Customer cancelled at door.')],
+    assignmentHistory: [createAssignment('ORD-8905', '4', 2860, 'CLOSED', 2700, 'Delivery Failed')]
+  }
 ];
+

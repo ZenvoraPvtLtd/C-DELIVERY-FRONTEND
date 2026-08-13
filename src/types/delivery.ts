@@ -42,6 +42,14 @@ export interface DeliveryOrder {
   failureNotes?: string;
   failedAt?: string;
   
+  failureStatus?: 'OPEN' | 'INVESTIGATING' | 'RESOLVED';
+  failureDescription?: string;
+  attemptCount?: number;
+  lastAttemptAt?: string;
+  resolution?: string;
+  resolvedAt?: string;
+  internalNotes?: string;
+  
   timeline: DeliveryTimelineEvent[];
   assignmentHistory: AssignmentHistoryRecord[];
 }
@@ -53,3 +61,4 @@ export interface PaginatedDeliveries {
   limit: number;
   totalPages: number;
 }
+
