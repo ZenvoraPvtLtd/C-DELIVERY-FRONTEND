@@ -63,8 +63,13 @@ export function AuditFilterBar({ filters, onFilterChange, onClear, onRefresh, is
           <option value="ALL">All Roles</option>
           <option value="SUPER_ADMIN">Super Admin</option>
           <option value="ADMIN">Admin</option>
+          <option value="OUTLET_MANAGER">Outlet Manager</option>
+          <option value="KITCHEN_MANAGER">Kitchen Manager</option>
           <option value="DELIVERY_MANAGER">Delivery Manager</option>
-          <option value="OPERATIONS_MANAGER">Operations Manager</option>
+          <option value="FINANCE_MANAGER">Finance Manager</option>
+          <option value="INVENTORY_MANAGER">Inventory Manager</option>
+          <option value="CUSTOMER_SUPPORT">Customer Support</option>
+          <option value="MARKETING_MANAGER">Marketing Manager</option>
           <option value="SYSTEM">System</option>
         </select>
 

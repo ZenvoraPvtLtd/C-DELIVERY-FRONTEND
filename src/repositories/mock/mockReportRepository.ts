@@ -3,7 +3,7 @@ import { DeliveryReportFilters } from '@/types/reports';
 import { DeliveryOrder } from '@/types/delivery';
 import { mockDeliveries } from '@/services/deliveries/deliveryMockData';
 
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, 0));
 
 export const mockReportRepository: IReportRepository = {
   async getReportData(filters: DeliveryReportFilters): Promise<DeliveryOrder[]> {
@@ -53,3 +53,4 @@ export const mockReportRepository: IReportRepository = {
     return filtered;
   }
 };
+

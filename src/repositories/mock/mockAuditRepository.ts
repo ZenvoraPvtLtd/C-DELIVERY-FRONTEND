@@ -2,7 +2,7 @@ import { IAuditRepository } from '../interfaces/IAuditRepository';
 import { AuditFilters, PaginatedAuditLogs, AuditEventPayload, AuditLog } from '@/types/audit';
 import { mockAuditLogs } from '@/services/audit/auditMockData';
 
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, 0));
 
 export const mockAuditRepository: IAuditRepository = {
   async getAuditLogs(filters: AuditFilters, page: number = 1, limit: number = 20): Promise<PaginatedAuditLogs> {
@@ -83,5 +83,6 @@ export const mockAuditRepository: IAuditRepository = {
     return newLog;
   }
 };
+
 
 

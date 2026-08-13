@@ -17,12 +17,13 @@ export type Permission =
 export type Role = 
   | 'SUPER_ADMIN'
   | 'ADMIN'
-  | 'OPERATIONS_MANAGER'
-  | 'ORDER_MANAGER'
-  | 'CATALOG_MANAGER'
+  | 'OUTLET_MANAGER'
+  | 'KITCHEN_MANAGER'
   | 'DELIVERY_MANAGER'
+  | 'FINANCE_MANAGER'
+  | 'INVENTORY_MANAGER'
   | 'CUSTOMER_SUPPORT'
-  | 'REPORTS_MANAGER';
+  | 'MARKETING_MANAGER';
 
 export interface CurrentUser {
   userId: string;

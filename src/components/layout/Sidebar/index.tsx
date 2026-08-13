@@ -58,7 +58,7 @@ export function Sidebar({ collapsed, onCollapse, mobileOpen, onMobileClose }: Si
       <aside className={styles.sidebar + (collapsed ? ' ' + styles.collapsed : '') + (mobileOpen ? ' ' + styles.mobileOpen : '')}>
         <div className={styles.brand}>
           <Truck className={styles.brandIcon} size={24} />
-          {!collapsed && <span>Delivery (C)</span>}
+          {!collapsed && <span>Delivery</span>}
         </div>
         
         <nav className={styles.nav}>
@@ -98,4 +98,5 @@ export function Sidebar({ collapsed, onCollapse, mobileOpen, onMobileClose }: Si
     </>
   );
 }
+
 

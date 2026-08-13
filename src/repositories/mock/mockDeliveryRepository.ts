@@ -6,7 +6,7 @@ import { mockPartners } from '@/services/partners/partnerMockData';
 import { auditService } from '@/services/audit/auditService';
 import { AuditActor } from '@/types/audit';
 
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, 0));
 
 export const mockDeliveryRepository: IDeliveryRepository = {
   async getDeliveries(filters: any, page: number = 1, limit: number = 10): Promise<PaginatedDeliveries> {
@@ -127,4 +127,5 @@ export const mockDeliveryRepository: IDeliveryRepository = {
     return order;
   }
 };
+
 

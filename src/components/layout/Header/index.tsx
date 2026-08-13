@@ -27,8 +27,8 @@ export function Header({ onMobileMenuClick }: HeaderProps) {
   };
 
   const roles: Role[] = [
-    'SUPER_ADMIN', 'ADMIN', 'DELIVERY_MANAGER', 'OPERATIONS_MANAGER', 
-    'ORDER_MANAGER', 'CATALOG_MANAGER', 'CUSTOMER_SUPPORT', 'REPORTS_MANAGER'
+    'SUPER_ADMIN', 'ADMIN', 'OUTLET_MANAGER', 'KITCHEN_MANAGER', 
+    'DELIVERY_MANAGER', 'FINANCE_MANAGER', 'INVENTORY_MANAGER', 'CUSTOMER_SUPPORT', 'MARKETING_MANAGER'
   ];
 
   return (
@@ -93,3 +93,4 @@ export function Header({ onMobileMenuClick }: HeaderProps) {
     </header>
   );
 }
+

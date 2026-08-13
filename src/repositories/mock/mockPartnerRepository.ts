@@ -5,7 +5,7 @@ import { auditService } from '@/services/audit/auditService';
 import { AuditActor } from '@/types/audit';
 
 // Helper to simulate network latency
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, 0));
 
 export const mockPartnerRepository: IPartnerRepository = {
   async getPartners(filters: PartnerFilters, page: number = 1, limit: number = 10): Promise<PaginatedResult<DeliveryPartner>> {
@@ -158,3 +158,4 @@ export const mockPartnerRepository: IPartnerRepository = {
     return mockPartners[index];
   }
 };
+

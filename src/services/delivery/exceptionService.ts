@@ -2,7 +2,7 @@ import { DeliveryOrder } from '@/types/delivery';
 import { mockDeliveries } from '../deliveries/deliveryMockData';
 import { mockPartners } from '../partners/partnerMockData';
 
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, 0));
 
 export const exceptionService = {
   async markDeliveryFailed(orderId: string, reason: string, notes?: string, actor: string = 'Current User'): Promise<DeliveryOrder> {
@@ -53,4 +53,5 @@ export const exceptionService = {
     return order;
   }
 };
+
 
