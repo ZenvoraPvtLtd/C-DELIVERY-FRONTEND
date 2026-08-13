@@ -23,11 +23,12 @@ interface ActiveDeliveriesTableProps {
   onUpdateStatusClick: (order: DeliveryOrder, transition: StatusTransition) => void;
   onReassignClick: (order: DeliveryOrder) => void;
   onFailClick: (order: DeliveryOrder) => void;
+  onAssignClick?: (order: DeliveryOrder) => void;
 }
 
 export function ActiveDeliveriesTable({ 
   data, total, page, limit, totalPages, onPageChange, isLoading, 
-  onUpdateStatusClick, onReassignClick, onFailClick 
+  onUpdateStatusClick, onReassignClick, onFailClick, onAssignClick 
 }: ActiveDeliveriesTableProps) {
   const router = useRouter();
   
@@ -169,7 +170,16 @@ export function ActiveDeliveriesTable({
                       
                       {quickTransition && (
                         <ActionGuard permission={quickTransition.to === 'DELIVERED' ? 'DELIVERY_COMPLETE' : 'DELIVERY_STATUS_UPDATE'}>
-                          <Button size="sm" onClick={() => onUpdateStatusClick(order, quickTransition)}>
+                          <Button 
+                            size="sm" 
+                            onClick={() => {
+                              if (order.status === 'WAITING_FOR_ASSIGNMENT' && onAssignClick) {
+                                onAssignClick(order);
+                              } else {
+                                onUpdateStatusClick(order, quickTransition);
+                              }
+                            }}
+                          >
                             {quickTransition.label}
                           </Button>
                         </ActionGuard>
@@ -214,11 +224,22 @@ export function ActiveDeliveriesTable({
                                   fontSize: 'var(--font-size-sm)', color: 'var(--color-text)',
                                   textAlign: 'left', borderRadius: 'var(--radius-sm)'
                                 }}
-                                onClick={() => { setOpenMenuId(null); onReassignClick(order); }}
+                                onClick={() => { 
+                                  setOpenMenuId(null); 
+                                  if (order.status === 'WAITING_FOR_ASSIGNMENT' && onAssignClick) {
+                                    onAssignClick(order);
+                                  } else {
+                                    onReassignClick(order); 
+                                  }
+                                }}
                                 onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'var(--color-background)'}
                                 onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                               >
-                                <UserX size={14} /> Reassign Partner
+                                {order.status === 'WAITING_FOR_ASSIGNMENT' ? (
+                                  <><UserX size={14} /> Assign Partner</>
+                                ) : (
+                                  <><UserX size={14} /> Reassign Partner</>
+                                )}
                               </button>
                             </ActionGuard>
                             

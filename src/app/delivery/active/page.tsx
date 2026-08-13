@@ -11,6 +11,7 @@ import { FailedDeliveryModal } from '@/features/tracking/components/FailedDelive
 import { ErrorState } from '@/components/ui/ErrorState';
 import { DeliveryOrder } from '@/types/delivery';
 import { StatusTransition } from '@/types/tracking';
+import { AssignmentDrawer } from '@/features/assignments/components/AssignmentDrawer';
 
 export default function ActiveDeliveriesPage() {
   const { data, isLoading, error, filters, updateFilters, clearFilters, page, setPage, refresh } = useActiveDeliveries();
@@ -20,6 +21,7 @@ export default function ActiveDeliveriesPage() {
   
   const [isReassigning, setIsReassigning] = useState<DeliveryOrder | null>(null);
   const [isFailing, setIsFailing] = useState<DeliveryOrder | null>(null);
+  const [isAssigningId, setIsAssigningId] = useState<string | null>(null);
 
   const handleUpdateStatusClick = (order: DeliveryOrder, transition: StatusTransition) => {
     setSelectedOrder(order);
@@ -65,6 +67,7 @@ export default function ActiveDeliveriesPage() {
           onUpdateStatusClick={handleUpdateStatusClick}
           onReassignClick={setIsReassigning}
           onFailClick={setIsFailing}
+          onAssignClick={(order) => setIsAssigningId(order.id)}
         />
       )}
 
@@ -89,6 +92,15 @@ export default function ActiveDeliveriesPage() {
         onClose={() => setIsFailing(null)}
         onSuccess={() => {
           setIsFailing(null);
+          refresh();
+        }}
+      />
+
+      <AssignmentDrawer 
+        orderId={isAssigningId}
+        onClose={() => setIsAssigningId(null)}
+        onAssignmentComplete={() => {
+          setIsAssigningId(null);
           refresh();
         }}
       />
