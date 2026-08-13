@@ -119,7 +119,7 @@ export const mockFailedDeliveryRepository: IFailedDeliveryRepository = {
     
     const timestamp = new Date().toLocaleString();
     const actorName = typeof actor === 'string' ? actor : actor?.name || 'System';
-    const newNoteStr = [\\\ \]: \;
+    const newNoteStr = `[${timestamp}] ${actorName}: ${note}`;
     
     if (order.internalNotes) {
       order.internalNotes = order.internalNotes + '\n' + newNoteStr;
@@ -144,7 +144,7 @@ export const mockFailedDeliveryRepository: IFailedDeliveryRepository = {
       status: 'FAILED',
       timestamp: new Date().toISOString(),
       actor: typeof actor === 'string' ? actor : actor?.name || 'System',
-      notes: Resolved: \
+      notes: `Resolved: ${resolution}`
     });
     
     return { ...order };
