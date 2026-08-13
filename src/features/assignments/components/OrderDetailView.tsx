@@ -57,7 +57,7 @@ export function OrderDetailView({ order, assignedPartner }: OrderDetailViewProps
             <div style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--spacing-2)' }}>Current Status</div>
             <StatusBadge 
               status={order.status.replace(/_/g, ' ')} 
-              variant={order.status === 'WAITING_FOR_ASSIGNMENT' ? 'waiting' : (order.status === 'ASSIGNED' ? 'success' : 'active')} 
+              variant={order.status === 'WAITING_FOR_ASSIGNMENT' ? 'waiting' : (order.status === 'ASSIGNED' ? 'assigned' : 'active')} 
             />
           </div>
 
