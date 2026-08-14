@@ -33,13 +33,8 @@ export function StatusDistributionChart({ data }: StatusDistributionChartProps) 
   };
 
   const renderCustomizedLabel = (props: any) => {
-    const { cx, cy, midAngle, innerRadius, outerRadius, percent, name, value, payload, fill } = props;
-    const RADIAN = Math.PI / 180;
-    // Push the label outside the pie
-    const radius = innerRadius + (outerRadius - innerRadius) + 35;
-    const x = cx + radius * Math.cos(-midAngle * RADIAN);
-    const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
+    const { cx, x, y, name, value, payload, percent, fill } = props;
+    
     return (
       <text 
         x={x} 
@@ -47,7 +42,7 @@ export function StatusDistributionChart({ data }: StatusDistributionChartProps) 
         fill={fill} 
         textAnchor={x > cx ? 'start' : 'end'} 
         dominantBaseline="central" 
-        fontSize={12}
+        fontSize={13}
         fontWeight={600}
       >
         {`${String(name).replace(/_/g, ' ')}: ${value} (${payload.percentage || Math.round(percent * 100)}%)`}
@@ -62,18 +57,18 @@ export function StatusDistributionChart({ data }: StatusDistributionChartProps) 
       </CardHeader>
       <CardContent style={{ height: 350, display: 'flex', flexDirection: 'column' }}>
         <ResponsiveContainer width="100%" height="100%">
-          <PieChart>
+          <PieChart margin={{ top: 20, right: 30, bottom: 20, left: 30 }}>
             <Pie
               data={data}
               cx="50%"
               cy="50%"
-              innerRadius={60}
-              outerRadius={85}
-              paddingAngle={2}
+              innerRadius={65}
+              outerRadius={90}
+              paddingAngle={3}
               dataKey="count"
               nameKey="status"
               label={renderCustomizedLabel}
-              labelLine={{ stroke: 'var(--color-border)', strokeWidth: 1 }}
+              labelLine={{ stroke: 'var(--color-border)', strokeWidth: 1.5 }}
             >
               {data.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={getColor(entry.status)} />
