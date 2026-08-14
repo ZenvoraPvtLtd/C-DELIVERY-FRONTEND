@@ -62,8 +62,8 @@ export function StatusDistributionChart({ data }: StatusDistributionChartProps) 
               data={data}
               cx="50%"
               cy="50%"
-              innerRadius={65}
-              outerRadius={90}
+              innerRadius={80}
+              outerRadius={110}
               paddingAngle={3}
               dataKey="count"
               nameKey="status"
@@ -77,12 +77,6 @@ export function StatusDistributionChart({ data }: StatusDistributionChartProps) 
             <Tooltip 
               formatter={(value: any, name: any, props: any) => [`${value} (${props.payload.percentage}%)`, String(name).replace(/_/g, ' ')]}
               contentStyle={{ borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)', fontSize: 13 }}
-            />
-            <Legend 
-              layout="horizontal" 
-              verticalAlign="bottom" 
-              align="center"
-              formatter={(value) => <span style={{ color: 'var(--color-text)', fontSize: 12 }}>{value.replace(/_/g, ' ')}</span>}
             />
           </PieChart>
         </ResponsiveContainer>
