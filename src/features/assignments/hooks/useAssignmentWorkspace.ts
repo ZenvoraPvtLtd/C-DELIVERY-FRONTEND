@@ -38,10 +38,7 @@ export function useAssignmentWorkspace() {
   }, [filters, page]);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      fetchData();
-    }, 300);
-    return () => clearTimeout(timer);
+    fetchData();
   }, [fetchData]);
 
   useEffect(() => {
