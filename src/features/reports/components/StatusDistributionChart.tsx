@@ -32,6 +32,29 @@ export function StatusDistributionChart({ data }: StatusDistributionChartProps) 
     }
   };
 
+  const renderCustomizedLabel = (props: any) => {
+    const { cx, cy, midAngle, innerRadius, outerRadius, percent, name, value, payload, fill } = props;
+    const RADIAN = Math.PI / 180;
+    // Push the label outside the pie
+    const radius = innerRadius + (outerRadius - innerRadius) + 35;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    return (
+      <text 
+        x={x} 
+        y={y} 
+        fill={fill} 
+        textAnchor={x > cx ? 'start' : 'end'} 
+        dominantBaseline="central" 
+        fontSize={12}
+        fontWeight={600}
+      >
+        {`${String(name).replace(/_/g, ' ')}: ${value} (${payload.percentage || Math.round(percent * 100)}%)`}
+      </text>
+    );
+  };
+
   return (
     <Card style={{ height: '100%' }}>
       <CardHeader>
@@ -43,16 +66,14 @@ export function StatusDistributionChart({ data }: StatusDistributionChartProps) 
             <Pie
               data={data}
               cx="50%"
-              cy="45%"
+              cy="50%"
               innerRadius={60}
-              outerRadius={90}
+              outerRadius={85}
               paddingAngle={2}
               dataKey="count"
               nameKey="status"
-              label={({ name, value, payload, percent }: any) => 
-                `${String(name).replace(/_/g, ' ')}: ${value} (${payload.percentage || Math.round(percent * 100)}%)`
-              }
-              labelLine={true}
+              label={renderCustomizedLabel}
+              labelLine={{ stroke: 'var(--color-border)', strokeWidth: 1 }}
             >
               {data.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={getColor(entry.status)} />
