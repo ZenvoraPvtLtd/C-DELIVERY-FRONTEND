@@ -7,15 +7,15 @@ export function usePermissions() {
   const { user } = useAuth();
 
   const can = (permission: Permission) => {
-    return user.permissions.includes(permission);
+    return user?.permissions.includes(permission) ?? false;
   };
 
   const canAny = (permissions: Permission[]) => {
-    return permissions.some(p => user.permissions.includes(p));
+    return permissions.some(p => user?.permissions.includes(p)) ?? false;
   };
 
   const canAll = (permissions: Permission[]) => {
-    return permissions.every(p => user.permissions.includes(p));
+    return permissions.every(p => user?.permissions.includes(p)) ?? false;
   };
 
   // We memoize the return object so it doesn't cause unnecessary re-renders if used in deps

@@ -12,7 +12,7 @@ interface HeaderProps {
 
 export function Header({ onMobileMenuClick }: HeaderProps) {
   const pathname = usePathname();
-  const { user, switchRole } = useAuth();
+  const { user, switchRole, logout } = useAuth();
   const [searchFocused, setSearchFocused] = useState(false);
   const [showRoleMenu, setShowRoleMenu] = useState(false);
   
@@ -58,8 +58,8 @@ export function Header({ onMobileMenuClick }: HeaderProps) {
         
         <div style={{ position: 'relative' }}>
           <button className={styles.profileBtn} onClick={() => setShowRoleMenu(!showRoleMenu)}>
-            <div className={styles.avatar}>{user.name.split(' ').map(n => n[0]).join('').substring(0, 2)}</div>
-            <span className={styles.profileName}>{user.name}</span>
+            <div className={styles.avatar}>{user?.name?.split(' ').map(n => n[0]).join('').substring(0, 2) || 'U'}</div>
+            <span className={styles.profileName}>{user?.name || 'User'}</span>
           </button>
 
           {showRoleMenu && (
@@ -77,15 +77,26 @@ export function Header({ onMobileMenuClick }: HeaderProps) {
                   onClick={() => { switchRole(r); setShowRoleMenu(false); }}
                   style={{
                     display: 'block', width: '100%', textAlign: 'left', padding: 'var(--spacing-2)',
-                    background: user.role === r ? 'var(--color-background)' : 'transparent',
+                    background: user?.role === r ? 'var(--color-background)' : 'transparent',
                     border: 'none', borderRadius: 'var(--radius-sm)', cursor: 'pointer',
-                    fontSize: 'var(--font-size-sm)', color: user.role === r ? 'var(--color-primary)' : 'var(--color-text)',
-                    fontWeight: user.role === r ? 600 : 400
+                    fontSize: 'var(--font-size-sm)', color: user?.role === r ? 'var(--color-primary)' : 'var(--color-text)',
+                    fontWeight: user?.role === r ? 600 : 400
                   }}
                 >
                   {r.replace(/_/g, ' ')}
                 </button>
               ))}
+              <div style={{ borderTop: '1px solid var(--color-border)', margin: 'var(--spacing-2) 0' }} />
+              <button
+                onClick={() => { logout(); setShowRoleMenu(false); }}
+                style={{
+                  display: 'block', width: '100%', textAlign: 'left', padding: 'var(--spacing-2)',
+                  background: 'transparent', border: 'none', borderRadius: 'var(--radius-sm)', cursor: 'pointer',
+                  fontSize: 'var(--font-size-sm)', color: '#ef4444', fontWeight: 500
+                }}
+              >
+                Logout
+              </button>
             </div>
           )}
         </div>
