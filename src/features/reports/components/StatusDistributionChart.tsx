@@ -62,8 +62,8 @@ export function StatusDistributionChart({ data }: StatusDistributionChartProps) 
               data={data}
               cx="50%"
               cy="50%"
-              innerRadius={80}
-              outerRadius={110}
+              innerRadius={65}
+              outerRadius={90}
               paddingAngle={3}
               dataKey="count"
               nameKey="status"
