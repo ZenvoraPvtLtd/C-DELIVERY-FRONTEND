@@ -51,19 +51,19 @@ export function StatusDistributionChart({ data }: StatusDistributionChartProps) 
   };
 
   return (
-    <Card style={{ height: '100%' }}>
+    <Card style={{ display: 'flex', flexDirection: 'column' }}>
       <CardHeader>
         <CardTitle>Delivery Status Distribution</CardTitle>
       </CardHeader>
-      <CardContent style={{ height: 400, display: 'flex', flexDirection: 'column' }}>
+      <CardContent style={{ flex: 1, minHeight: 350, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
         <ResponsiveContainer width="100%" height="100%">
-          <PieChart margin={{ top: 30, right: 30, bottom: 30, left: 30 }}>
+          <PieChart margin={{ top: 20, right: 30, bottom: 20, left: 30 }}>
             <Pie
               data={data}
               cx="50%"
               cy="50%"
-              innerRadius={70}
-              outerRadius={95}
+              innerRadius="50%"
+              outerRadius="75%"
               paddingAngle={3}
               dataKey="count"
               nameKey="status"
