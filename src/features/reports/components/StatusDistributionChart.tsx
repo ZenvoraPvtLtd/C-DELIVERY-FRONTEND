@@ -49,6 +49,10 @@ export function StatusDistributionChart({ data }: StatusDistributionChartProps) 
               paddingAngle={2}
               dataKey="count"
               nameKey="status"
+              label={({ name, value, payload, percent }: any) => 
+                `${String(name).replace(/_/g, ' ')}: ${value} (${payload.percentage || Math.round(percent * 100)}%)`
+              }
+              labelLine={true}
             >
               {data.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={getColor(entry.status)} />
