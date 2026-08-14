@@ -57,13 +57,13 @@ export function StatusDistributionChart({ data }: StatusDistributionChartProps) 
       </CardHeader>
       <CardContent style={{ height: 350, display: 'flex', flexDirection: 'column' }}>
         <ResponsiveContainer width="100%" height="100%">
-          <PieChart margin={{ top: 20, right: 30, bottom: 20, left: 30 }}>
+          <PieChart margin={{ top: 10, right: 30, bottom: 30, left: 30 }}>
             <Pie
               data={data}
               cx="50%"
-              cy="50%"
-              innerRadius={65}
-              outerRadius={90}
+              cy="45%"
+              innerRadius={60}
+              outerRadius={85}
               paddingAngle={3}
               dataKey="count"
               nameKey="status"
