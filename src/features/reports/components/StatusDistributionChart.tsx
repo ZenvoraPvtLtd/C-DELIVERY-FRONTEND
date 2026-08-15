@@ -51,33 +51,35 @@ export function StatusDistributionChart({ data }: StatusDistributionChartProps) 
   };
 
   return (
-    <Card>
+    <Card style={{ minHeight: 450 }}>
       <CardHeader>
         <CardTitle>Delivery Status Distribution</CardTitle>
       </CardHeader>
-      <CardContent style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: 'var(--spacing-6) 0' }}>
-        <PieChart width={450} height={300}>
-          <Pie
-            data={data}
-            cx={225}
-            cy={150}
-            innerRadius={70}
-            outerRadius={100}
-            paddingAngle={3}
-            dataKey="count"
-            nameKey="status"
-            label={renderCustomizedLabel}
-            labelLine={{ stroke: 'var(--color-border)', strokeWidth: 1.5 }}
-          >
-            {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={getColor(entry.status)} />
-            ))}
-          </Pie>
-          <Tooltip 
-            formatter={(value: any, name: any, props: any) => [`${value} (${props.payload.percentage}%)`, String(name).replace(/_/g, ' ')]}
-            contentStyle={{ borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)', fontSize: 13 }}
-          />
-        </PieChart>
+      <CardContent style={{ height: 350, padding: 0 }}>
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart margin={{ top: 30, right: 40, bottom: 30, left: 40 }}>
+            <Pie
+              data={data}
+              cx="50%"
+              cy="50%"
+              innerRadius={70}
+              outerRadius={100}
+              paddingAngle={3}
+              dataKey="count"
+              nameKey="status"
+              label={renderCustomizedLabel}
+              labelLine={{ stroke: 'var(--color-border)', strokeWidth: 1.5 }}
+            >
+              {data.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={getColor(entry.status)} />
+              ))}
+            </Pie>
+            <Tooltip 
+              formatter={(value: any, name: any, props: any) => [`${value} (${props.payload.percentage}%)`, String(name).replace(/_/g, ' ')]}
+              contentStyle={{ borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)', fontSize: 13 }}
+            />
+          </PieChart>
+        </ResponsiveContainer>
       </CardContent>
     </Card>
   );
