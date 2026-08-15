@@ -55,33 +55,29 @@ export function StatusDistributionChart({ data }: StatusDistributionChartProps) 
       <CardHeader>
         <CardTitle>Delivery Status Distribution</CardTitle>
       </CardHeader>
-      <CardContent>
-        <div style={{ height: 350, width: '100%' }}>
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart margin={{ top: 30, right: 30, bottom: 30, left: 30 }}>
-            <Pie
-              data={data}
-              cx="50%"
-              cy="50%"
-              innerRadius={60}
-              outerRadius={80}
-              paddingAngle={3}
-              dataKey="count"
-              nameKey="status"
-              label={renderCustomizedLabel}
-              labelLine={{ stroke: 'var(--color-border)', strokeWidth: 1.5 }}
-            >
-              {data.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={getColor(entry.status)} />
-              ))}
-            </Pie>
-            <Tooltip 
-              formatter={(value: any, name: any, props: any) => [`${value} (${props.payload.percentage}%)`, String(name).replace(/_/g, ' ')]}
-              contentStyle={{ borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)', fontSize: 13 }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
-        </div>
+      <CardContent style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: 'var(--spacing-6) 0' }}>
+        <PieChart width={450} height={300}>
+          <Pie
+            data={data}
+            cx={225}
+            cy={150}
+            innerRadius={70}
+            outerRadius={100}
+            paddingAngle={3}
+            dataKey="count"
+            nameKey="status"
+            label={renderCustomizedLabel}
+            labelLine={{ stroke: 'var(--color-border)', strokeWidth: 1.5 }}
+          >
+            {data.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={getColor(entry.status)} />
+            ))}
+          </Pie>
+          <Tooltip 
+            formatter={(value: any, name: any, props: any) => [`${value} (${props.payload.percentage}%)`, String(name).replace(/_/g, ' ')]}
+            contentStyle={{ borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)', fontSize: 13 }}
+          />
+        </PieChart>
       </CardContent>
     </Card>
   );
