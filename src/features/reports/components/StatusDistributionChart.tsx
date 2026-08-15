@@ -51,13 +51,14 @@ export function StatusDistributionChart({ data }: StatusDistributionChartProps) 
   };
 
   return (
-    <Card style={{ display: 'flex', flexDirection: 'column' }}>
+    <Card>
       <CardHeader>
         <CardTitle>Delivery Status Distribution</CardTitle>
       </CardHeader>
-      <CardContent style={{ flex: 1, minHeight: 400, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-        <ResponsiveContainer width="100%" height="100%">
-          <PieChart margin={{ top: 40, right: 60, bottom: 40, left: 60 }}>
+      <CardContent>
+        <div style={{ height: 350, width: '100%' }}>
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart margin={{ top: 30, right: 30, bottom: 30, left: 30 }}>
             <Pie
               data={data}
               cx="50%"
@@ -80,6 +81,7 @@ export function StatusDistributionChart({ data }: StatusDistributionChartProps) 
             />
           </PieChart>
         </ResponsiveContainer>
+        </div>
       </CardContent>
     </Card>
   );
