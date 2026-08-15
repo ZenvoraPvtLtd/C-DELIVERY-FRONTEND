@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState, ReactNode, useEffect } from
 import { CurrentUser, Role, Permission } from '@/types/auth';
 import { ROLE_PERMISSIONS } from '@/config/permissions';
 import { useRouter, usePathname } from 'next/navigation';
+import { authService } from './authService';
 
 interface AuthContextType {
   user: CurrentUser | null;
@@ -11,13 +12,6 @@ interface AuthContextType {
   logout: () => void;
   switchRole: (role: Role) => void;
 }
-
-const defaultUser: CurrentUser = {
-  userId: 'USR-SUPERADMIN',
-  name: 'Demo Admin',
-  role: 'SUPER_ADMIN',
-  permissions: ROLE_PERMISSIONS['SUPER_ADMIN']
-};
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
@@ -34,32 +28,56 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname();
 
   useEffect(() => {
-    // Check for cookie
-    const hasAuthCookie = document.cookie.includes('c_delivery_auth=true');
-    if (hasAuthCookie) {
-      setUser(defaultUser);
-    }
-    setIsInitializing(false);
+    const initializeAuth = async () => {
+      try {
+        const token = localStorage.getItem('c_delivery_access_token');
+        if (token) {
+          const currentUser = await authService.getMe();
+          setUser(currentUser);
+        }
+      } catch (error) {
+        console.error('Failed to restore session:', error);
+        localStorage.removeItem('c_delivery_access_token');
+        localStorage.removeItem('c_delivery_refresh_token');
+      } finally {
+        setIsInitializing(false);
+      }
+    };
+
+    initializeAuth();
   }, []);
 
   const login = async (email: string, password: string) => {
-    // Demo validation
-    if (email === 'admin@cdelivery.demo' && password === 'Demo@123456') {
-      document.cookie = "c_delivery_auth=true; path=/; max-age=86400";
-      setUser(defaultUser);
+    try {
+      const response = await authService.login(email, password);
+      localStorage.setItem('c_delivery_access_token', response.accessToken);
+      localStorage.setItem('c_delivery_refresh_token', response.refreshToken);
+      
+      setUser(response.user);
       router.push('/delivery');
       return true;
+    } catch (error) {
+      console.error('Login failed:', error);
+      return false;
     }
-    return false;
   };
 
-  const logout = () => {
+  const logout = async () => {
+    await authService.logout();
+    localStorage.removeItem('c_delivery_access_token');
+    localStorage.removeItem('c_delivery_refresh_token');
+    
+    // Clear the legacy mock cookie just in case it's still hanging around
     document.cookie = "c_delivery_auth=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT";
+    
     setUser(null);
     router.push('/login');
   };
 
   const switchRole = (newRole: Role) => {
+    // Only used for mock/demo purposes to fast-switch UI.
+    // In a real app with real auth, we'd need to re-login or request a token upgrade.
+    // We'll leave the state update here so the UI can still show different states if needed.
     if (!user) return;
     setUser({
       ...user,
@@ -70,8 +88,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
-  // Skip rendering the children while checking auth state so we don't flash content.
-  // Exception for login page.
   if (isInitializing && pathname !== '/login') {
     return null; 
   }

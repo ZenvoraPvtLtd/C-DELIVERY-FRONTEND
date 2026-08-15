@@ -30,8 +30,6 @@ export const apiAuditRepository: IAuditRepository = {
   },
 
   async createAuditEvent(payload: AuditEventPayload): Promise<AuditLog> {
-    const requestData = mapDomainToAuditRequest(payload);
-    const response = await apiClient.post<ApiResponse<AuditDTO>>(`/audit-logs`, requestData);
-    return mapAuditDtoToDomain(response.data);
+    throw new Error('Audit events cannot be created from the frontend API client. They are generated internally by backend services.');
   }
 };

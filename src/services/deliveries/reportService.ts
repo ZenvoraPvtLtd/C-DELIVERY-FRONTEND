@@ -8,6 +8,10 @@ export const reportService = {
     const reportRepo = repositoryFactory.getReportRepository();
     const partnerRepo = repositoryFactory.getPartnerRepository();
 
+    if (reportRepo.getAggregatedReportData) {
+      return await reportRepo.getAggregatedReportData(filters);
+    }
+
     const filteredDeliveries = await reportRepo.getReportData(filters);
     
     // Partner filters for calculations

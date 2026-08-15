@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { DeliveryOrder } from '@/types/delivery';
 import { DeliveryPartner } from '@/types/partner';
-import { assignmentService } from '@/services/assignments/assignmentService';
+import { orderService } from '@/services/orders/orderService';
 import { partnerService } from '@/services/partners/partnerService';
 import { useAppEvent } from '@/lib/events';
 
@@ -16,7 +16,7 @@ export function useOrderDetail(orderId: string) {
     setIsLoading(true);
     setError(null);
     try {
-      const data = await assignmentService.getOrderDetails(orderId);
+      const data = await orderService.getOrderDetails(orderId);
       setOrder(data);
       
       if (data.partnerId) {

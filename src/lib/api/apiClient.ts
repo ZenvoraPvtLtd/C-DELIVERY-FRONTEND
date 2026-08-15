@@ -18,7 +18,12 @@ const mapStatusToCategory = (status: number): ApiErrorCategory => {
 };
 
 const getAuthHeaders = (): HeadersInit => {
-  // Frontend implementation for auth goes here later
+  if (typeof window !== 'undefined') {
+    const token = localStorage.getItem('c_delivery_access_token');
+    if (token) {
+      return { Authorization: `Bearer ${token}` };
+    }
+  }
   return {};
 };
 

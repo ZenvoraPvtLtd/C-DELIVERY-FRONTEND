@@ -20,10 +20,6 @@ export const assignmentService = {
     return repo.getPendingAssignments(filters, page, limit);
   },
 
-  async getOrderDetails(orderId: string): Promise<DeliveryOrder> {
-    const repo = repositoryFactory.getDeliveryRepository();
-    return repo.getDeliveryById(orderId);
-  },
 
   async getPartnersForAssignment(search?: string): Promise<{ partner: DeliveryPartner; isEligible: boolean; reason?: string }[]> {
     const repo = repositoryFactory.getAssignmentRepository();

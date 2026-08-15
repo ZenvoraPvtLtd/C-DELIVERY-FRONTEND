@@ -3,4 +3,5 @@ import { DeliveryOrder } from '@/types/delivery';
 
 export interface IReportRepository {
   getReportData(filters: DeliveryReportFilters): Promise<DeliveryOrder[]>;
+  getAggregatedReportData?(filters: DeliveryReportFilters): Promise<any>;
 }

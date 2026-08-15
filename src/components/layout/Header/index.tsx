@@ -4,6 +4,7 @@ import { Menu, Search, Bell } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import styles from './Header.module.css';
 import { useAuth } from '@/features/auth/AuthContext';
+import { NotificationDropdown } from '@/features/notifications/components/NotificationDropdown';
 import { Role } from '@/types/auth';
 
 interface HeaderProps {
@@ -52,9 +53,7 @@ export function Header({ onMobileMenuClick }: HeaderProps) {
           />
         </div>
         
-        <button className={styles.iconBtn} title="Notifications">
-          <Bell size={20} />
-        </button>
+        <NotificationDropdown />
         
         <div style={{ position: 'relative' }}>
           <button className={styles.profileBtn} onClick={() => setShowRoleMenu(!showRoleMenu)}>

@@ -6,7 +6,8 @@ interface EnvConfig {
 }
 
 const getEnvConfig = (): EnvConfig => {
-  const dataMode = (process.env.NEXT_PUBLIC_DATA_MODE as DataMode) || 'mock';
+  const isProd = process.env.NODE_ENV === 'production';
+  const dataMode = (process.env.NEXT_PUBLIC_DATA_MODE as DataMode) || (isProd ? 'api' : 'mock');
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 
   if (dataMode === 'api' && !apiBaseUrl) {
