@@ -52,6 +52,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const response = await authService.login(email, password);
       localStorage.setItem('c_delivery_access_token', response.accessToken);
       localStorage.setItem('c_delivery_refresh_token', response.refreshToken);
+      document.cookie = 'c_delivery_auth=true; path=/; max-age=86400'; // 1 day
       
       setUser(response.user);
       router.push('/delivery');
