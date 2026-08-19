@@ -15,9 +15,17 @@ const app: Express = express();
 // Trust reverse proxies (Render, Vercel, Cloudflare, etc.)
 app.set('trust proxy', 1);
 
-// Security Middleware
+// Disable ETags to prevent 304 response caching issues on API endpoints
+app.set('etag', false);
+
+// Security & Cache Control Middleware
 app.use(helmet());
 app.use(mongoSanitize()); // Prevent NoSQL injection
+
+app.use((req, res, next) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+  next();
+});
 
 // Request Logger Middleware (for Render / stdout logs)
 app.use((req, res, next) => {

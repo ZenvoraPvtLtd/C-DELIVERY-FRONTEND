@@ -35,10 +35,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           const currentUser = await authService.getMe();
           setUser(currentUser);
         }
-      } catch (error) {
+      } catch (error: any) {
         console.error('Failed to restore session:', error);
-        localStorage.removeItem('c_delivery_access_token');
-        localStorage.removeItem('c_delivery_refresh_token');
+        if (error?.status === 401 || error?.category === 'UNAUTHORIZED') {
+          localStorage.removeItem('c_delivery_access_token');
+          localStorage.removeItem('c_delivery_refresh_token');
+        }
       } finally {
         setIsInitializing(false);
       }
