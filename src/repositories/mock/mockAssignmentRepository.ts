@@ -11,7 +11,7 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, 0));
 
 export const mockAssignmentRepository: IAssignmentRepository = {
   async getAllAssignments(filters: AssignmentWorkspaceFilters, page: number = 1, limit: number = 10): Promise<PaginatedDeliveries> {
-    await delay(400);
+    
     
     let filtered = [...mockDeliveries];
 
@@ -68,7 +68,7 @@ export const mockAssignmentRepository: IAssignmentRepository = {
   },
 
   async getAssignmentMetrics(): Promise<AssignmentMetrics> {
-    await delay(300);
+    
     
     const now = new Date();
     let pending = 0;
@@ -98,7 +98,7 @@ export const mockAssignmentRepository: IAssignmentRepository = {
     return { pending, assignedToday, active, reassignments };
   },
   async getPendingAssignments(filters: AssignmentFilters, page: number = 1, limit: number = 10): Promise<PaginatedDeliveries> {
-    await delay(500);
+    
     
     let filtered = mockDeliveries.filter(d => d.status === 'WAITING_FOR_ASSIGNMENT');
 
@@ -126,7 +126,7 @@ export const mockAssignmentRepository: IAssignmentRepository = {
   },
 
   async getPartnersForAssignment(search?: string): Promise<{ partner: DeliveryPartner; isEligible: boolean; reason?: string }[]> {
-    await delay(400);
+    
     
     let activePartners = mockPartners.filter(p => p.status === 'ACTIVE');
     
@@ -151,7 +151,7 @@ export const mockAssignmentRepository: IAssignmentRepository = {
   },
 
   async validateAssignment(orderId: string, partnerId: string): Promise<AssignmentValidationResult> {
-    await delay(300);
+    
     const order = mockDeliveries.find(d => d.id === orderId);
     if (!order) return { isValid: false, reason: 'Order not found' };
     if (order.status !== 'WAITING_FOR_ASSIGNMENT') return { isValid: false, reason: 'Order is not waiting for assignment' };
@@ -165,7 +165,7 @@ export const mockAssignmentRepository: IAssignmentRepository = {
   },
 
   async assignPartner(orderId: string, partnerId: string, actor?: AuditActor | string): Promise<DeliveryOrder> {
-    await delay(800);
+    
     
     const validation = await this.validateAssignment(orderId, partnerId);
     if (!validation.isValid) throw new Error(validation.reason || 'Invalid assignment');
@@ -219,7 +219,7 @@ export const mockAssignmentRepository: IAssignmentRepository = {
   },
 
   async getEligibleReassignmentPartners(orderId: string, search?: string): Promise<{ partner: DeliveryPartner; isEligible: boolean; reason?: string }[]> {
-    await delay(400);
+    
     const order = mockDeliveries.find(d => d.id === orderId);
     if (!order) throw new Error('Order not found');
 
@@ -246,7 +246,7 @@ export const mockAssignmentRepository: IAssignmentRepository = {
   },
 
   async reassignDelivery(orderId: string, newPartnerId: string, reason: string, notes?: string, actor?: AuditActor | string): Promise<DeliveryOrder> {
-    await delay(800);
+    
     const orderIndex = mockDeliveries.findIndex(d => d.id === orderId);
     if (orderIndex === -1) throw new Error('Order not found');
     const order = mockDeliveries[orderIndex];

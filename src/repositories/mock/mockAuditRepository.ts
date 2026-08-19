@@ -6,7 +6,7 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, 0));
 
 export const mockAuditRepository: IAuditRepository = {
   async getAuditLogs(filters: AuditFilters, page: number = 1, limit: number = 20): Promise<PaginatedAuditLogs> {
-    await delay(400);
+    
 
     let filtered = [...mockAuditLogs];
 

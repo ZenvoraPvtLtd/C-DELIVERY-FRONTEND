@@ -9,7 +9,7 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, 0));
 
 export const mockPartnerRepository: IPartnerRepository = {
   async getPartners(filters: PartnerFilters, page: number = 1, limit: number = 10): Promise<PaginatedResult<DeliveryPartner>> {
-    await delay(600);
+    
     
     let filtered = [...mockPartners];
 
@@ -46,14 +46,14 @@ export const mockPartnerRepository: IPartnerRepository = {
   },
 
   async getPartnerById(id: string): Promise<DeliveryPartner> {
-    await delay(500);
+    
     const partner = mockPartners.find(p => p.id === id);
     if (!partner) throw new Error('Partner not found');
     return partner;
   },
 
   async createPartner(payload: PartnerMutationPayload, actor?: AuditActor | string): Promise<DeliveryPartner> {
-    await delay(800);
+    
     
     // Validation simulation
     if (mockPartners.some(p => p.partnerId === payload.partnerId)) {
@@ -85,7 +85,7 @@ export const mockPartnerRepository: IPartnerRepository = {
   },
 
   async updatePartner(id: string, payload: PartnerMutationPayload, actor?: AuditActor | string): Promise<DeliveryPartner> {
-    await delay(700);
+    
     const index = mockPartners.findIndex(p => p.id === id);
     if (index === -1) throw new Error('Partner not found');
 
@@ -118,7 +118,7 @@ export const mockPartnerRepository: IPartnerRepository = {
   },
 
   async updatePartnerStatus(id: string, status: PartnerStatus, actor?: AuditActor | string): Promise<DeliveryPartner> {
-    await delay(500);
+    
     const index = mockPartners.findIndex(p => p.id === id);
     if (index === -1) throw new Error('Partner not found');
     
@@ -145,7 +145,7 @@ export const mockPartnerRepository: IPartnerRepository = {
   },
 
   async updatePartnerAvailability(id: string, availability: PartnerAvailability): Promise<DeliveryPartner> {
-    await delay(500);
+    
     const index = mockPartners.findIndex(p => p.id === id);
     if (index === -1) throw new Error('Partner not found');
     
