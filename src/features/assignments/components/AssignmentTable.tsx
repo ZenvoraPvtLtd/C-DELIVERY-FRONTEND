@@ -147,7 +147,7 @@ export function AssignmentTable({
                           <UserPlus size={14} style={{ marginRight: 6 }} /> Assign
                         </Button>
                       ) : (
-                        <Button variant="outline" size="sm" onClick={() => router.push(`/delivery/orders/` + order.id)}>
+                        <Button variant="outline" size="sm" onClick={() => router.push(`/delivery/orders/` + order.orderId)}>
                           <Eye size={14} style={{ marginRight: 6 }} /> View
                         </Button>
                       )}
@@ -182,7 +182,7 @@ export function AssignmentTable({
                               </button>
                             )}
                             <button 
-                              onClick={() => { setOpenMenuId(null); router.push(`/delivery/orders/` + order.id); }}
+                              onClick={() => { setOpenMenuId(null); router.push(`/delivery/orders/` + order.orderId); }}
                               style={{ 
                                 width: '100%', padding: 'var(--spacing-3) var(--spacing-4)', textAlign: 'left',
                                 backgroundColor: 'transparent', border: 'none', cursor: 'pointer',

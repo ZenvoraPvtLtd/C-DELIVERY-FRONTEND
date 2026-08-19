@@ -159,7 +159,7 @@ export class AssignmentService {
       title: 'Delivery Assigned',
       message: `Delivery ${orderId} has been assigned to ${partner.name}.`,
       entityType: 'DELIVERY',
-      entityId: delivery._id?.toString(),
+      entityId: orderId,
       priority: 'NORMAL'
     }).catch(console.error); // Fail silently for notifications to not break business flow
 
@@ -258,7 +258,7 @@ export class AssignmentService {
       title: 'Delivery Reassigned',
       message: `Delivery ${orderId} reassigned to ${newPartner.name}. Reason: ${reason}`,
       entityType: 'DELIVERY',
-      entityId: delivery._id?.toString(),
+      entityId: orderId,
       priority: 'HIGH'
     }).catch(console.error);
 

@@ -126,7 +126,7 @@ export class DeliveryService {
           ? `Delivery ${orderId} failed. Reason: ${failureReason || 'Unknown'}`
           : `Delivery ${orderId} is now ${newStatus.replace(/_/g, ' ')}.`,
         entityType: 'DELIVERY',
-        entityId: delivery._id?.toString(),
+        entityId: orderId,
         priority: notificationPriority
       }).catch(console.error);
     }

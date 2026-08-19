@@ -113,7 +113,7 @@ export function DeliveryListTable({
                 >
                   <td style={{ padding: 'var(--spacing-4)' }}>
                     <div 
-                      onClick={() => router.push(`/delivery/orders/${order.id}`)}
+                      onClick={() => router.push(`/delivery/orders/${order.orderId}`)}
                       style={{ fontWeight: 600, color: 'var(--color-primary)', cursor: 'pointer', marginBottom: 2, display: 'inline-block' }}
                     >
                       {order.orderId}
@@ -156,12 +156,12 @@ export function DeliveryListTable({
                   </td>
                   <td style={{ padding: 'var(--spacing-4)', textAlign: 'right' }}>
                     <div style={{ display: 'flex', gap: 'var(--spacing-3)', justifyContent: 'flex-end', alignItems: 'center' }}>
-                      <Button variant="ghost" size="sm" onClick={() => router.push(`/delivery/orders/${order.id}`)}>
+                      <Button variant="ghost" size="sm" onClick={() => router.push(`/delivery/orders/${order.orderId}`)}>
                         Details
                       </Button>
                       
                       {isClosed ? (
-                        <Button variant="outline" size="sm" onClick={() => router.push(`/delivery/orders/${order.id}`)}>
+                        <Button variant="outline" size="sm" onClick={() => router.push(`/delivery/orders/${order.orderId}`)}>
                           <History size={14} style={{ marginRight: 6 }} /> Timeline
                         </Button>
                       ) : (

@@ -63,8 +63,6 @@ app.use(cors({
 // Body Parsing Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/api/v1/partners', partnerRoutes);
-app.use('/api/v1/orders', orderRoutes);
 app.use('/api/v1/audit-logs', auditRoutes);
 
 // API Routes
