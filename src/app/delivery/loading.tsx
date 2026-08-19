@@ -1,0 +1,20 @@
+"use client";
+import React from 'react';
+import { Loader2 } from 'lucide-react';
+
+export default function Loading() {
+  return (
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      minHeight: '60vh',
+      gap: 'var(--spacing-4)',
+      color: 'var(--color-text-muted)'
+    }}>
+      <Loader2 size={32} className="spin" />
+      <p style={{ fontSize: 'var(--font-size-sm)' }}>Loading...</p>
+    </div>
+  );
+}

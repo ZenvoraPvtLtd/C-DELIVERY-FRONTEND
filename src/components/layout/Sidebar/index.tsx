@@ -75,6 +75,7 @@ export function Sidebar({ collapsed, onCollapse, mobileOpen, onMobileClose }: Si
               <Link 
                 key={index} 
                 href={item.href!} 
+                prefetch={true}
                 className={styles.navItem + (isActive ? ' ' + styles.active : '')}
                 title={collapsed ? item.name : undefined}
                 onClick={() => mobileOpen && onMobileClose()}
