@@ -12,10 +12,31 @@ export interface RefreshResponse {
   refreshToken: string;
 }
 
+const mapRawUserToCurrentUser = (rawUser: any): CurrentUser => {
+  if (!rawUser) {
+    return {
+      userId: '',
+      name: '',
+      role: 'SUPER_ADMIN',
+      permissions: []
+    };
+  }
+  return {
+    userId: rawUser.userId || rawUser.id || '',
+    name: rawUser.name || '',
+    role: rawUser.role || 'SUPER_ADMIN',
+    permissions: rawUser.permissions || []
+  };
+};
+
 export const authService = {
   async login(email: string, password: string): Promise<AuthResponse> {
-    const response = await apiClient.post<{ data: AuthResponse }>('/auth/login', { email, password });
-    return response.data;
+    const response = await apiClient.post<{ data: { user: any; accessToken: string; refreshToken: string } }>('/auth/login', { email, password });
+    return {
+      user: mapRawUserToCurrentUser(response.data?.user),
+      accessToken: response.data?.accessToken || '',
+      refreshToken: response.data?.refreshToken || ''
+    };
   },
 
   async refresh(refreshToken: string): Promise<RefreshResponse> {
@@ -24,8 +45,8 @@ export const authService = {
   },
 
   async getMe(): Promise<CurrentUser> {
-    const response = await apiClient.get<{ data: { user: CurrentUser } }>('/auth/me');
-    return response.data.user;
+    const response = await apiClient.get<{ data: { user: any } }>('/auth/me');
+    return mapRawUserToCurrentUser(response.data?.user);
   },
 
   async logout(): Promise<void> {

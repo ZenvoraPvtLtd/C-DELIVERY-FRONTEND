@@ -36,9 +36,9 @@ const apiLimiter = rateLimit({
 
 app.use('/api/', apiLimiter);
 
-// CORS Configuration
+// CORS Configuration - allow any origin with credentials
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
+  origin: true,
   credentials: true
 }));
 
