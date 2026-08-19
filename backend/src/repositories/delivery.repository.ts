@@ -27,6 +27,25 @@ export class DeliveryRepository {
       query.partnerId = filters.partner_id;
     }
 
+    if (filters.dateRange && filters.dateRange !== 'ALL') {
+      const now = new Date();
+      const startDate = new Date();
+      if (filters.dateRange === 'TODAY') {
+        startDate.setHours(0,0,0,0);
+        query.orderDate = { $gte: startDate };
+      } else if (filters.dateRange === 'YESTERDAY') {
+        startDate.setDate(startDate.getDate() - 1);
+        startDate.setHours(0,0,0,0);
+        const endDate = new Date(startDate);
+        endDate.setHours(23,59,59,999);
+        query.orderDate = { $gte: startDate, $lte: endDate };
+      } else if (filters.dateRange === 'LAST_7_DAYS') {
+        startDate.setDate(startDate.getDate() - 7);
+        startDate.setHours(0,0,0,0);
+        query.orderDate = { $gte: startDate };
+      }
+    }
+
     const skip = (page - 1) * limit;
 
     const [data, total] = await Promise.all([

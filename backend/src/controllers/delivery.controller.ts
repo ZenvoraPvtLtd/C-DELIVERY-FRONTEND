@@ -12,6 +12,7 @@ export const getDeliveries = async (req: Request, res: Response) => {
   if (req.query.status) filters.status = req.query.status;
   if (req.query.history) filters.history = req.query.history;
   if (req.query.partner_id) filters.partner_id = req.query.partner_id;
+  if (req.query.dateRange) filters.dateRange = req.query.dateRange;
 
   const result = await deliveryService.getDeliveries(filters, page, limit);
   

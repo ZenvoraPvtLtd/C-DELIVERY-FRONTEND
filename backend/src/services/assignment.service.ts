@@ -8,9 +8,25 @@ import { mapPartnerToDTO } from '../utils/partner.mapper';
 import { mapDeliveryToDTO, mapTimelineEventToDTO, mapAssignmentToDTO } from '../utils/delivery.mapper';
 import { auditLogService } from '../services/auditLog.service';
 import { notificationService } from '../services/notification.service';
+import Delivery from '../models/Delivery.model';
+import Assignment from '../models/Assignment.model';
 import { ROLES } from '../constants/roles';
 
 export class AssignmentService {
+  async getMetrics() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const [pending, active, assignedToday, reassignments] = await Promise.all([
+      Delivery.countDocuments({ status: 'WAITING_FOR_ASSIGNMENT', isDeleted: false }),
+      Delivery.countDocuments({ status: { $in: ['ASSIGNED', 'PICKED_UP', 'OUT_FOR_DELIVERY'] }, isDeleted: false }),
+      Assignment.countDocuments({ assignedAt: { $gte: today }, isDeleted: false }),
+      Assignment.countDocuments({ status: 'SUPERSEDED', isDeleted: false })
+    ]);
+
+    return { pending, active, assignedToday, reassignments };
+  }
+
   async getEligiblePartners(search?: string, excludePartnerId?: string) {
     const filters: any = { status: 'ACTIVE' }; // Only ACTIVE partners
     if (search) filters.search = search;
