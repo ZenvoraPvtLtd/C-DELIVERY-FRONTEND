@@ -30,7 +30,7 @@ export class DeliveryRepository {
     const skip = (page - 1) * limit;
 
     const [data, total] = await Promise.all([
-      Delivery.find(query).sort({ orderDate: -1 }).skip(skip).limit(limit),
+      Delivery.find(query).populate('partnerId', 'fullName partnerCode').sort({ orderDate: -1 }).skip(skip).limit(limit),
       Delivery.countDocuments(query)
     ]);
 

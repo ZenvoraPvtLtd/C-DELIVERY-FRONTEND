@@ -58,7 +58,7 @@ export function AssignmentManagement() {
           totalPages={data?.totalPages || 1}
           onPageChange={setPage}
           isLoading={isLoading}
-          onAssignClick={(order) => setIsAssigningId(order.id)}
+          onAssignClick={(order) => setIsAssigningId(order.orderId)}
           onReassignClick={setIsReassigningOrder}
         />
       )}

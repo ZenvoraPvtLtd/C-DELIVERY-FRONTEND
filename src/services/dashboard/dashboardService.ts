@@ -59,7 +59,7 @@ export const dashboardService = {
     
     return sorted.map(d => ({
       orderId: d.orderId,
-      partner: d.partnerId || null,
+      partner: d.partnerName || d.partnerCode || d.partnerId || null,
       status: d.status.replace(/_/g, ' '),
       time: new Date(d.orderDate).toLocaleTimeString()
     }));

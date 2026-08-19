@@ -43,6 +43,8 @@ export const mapDeliveryDtoToDomain = (
   priority: deliveryDto.priority,
   status: deliveryDto.status,
   partnerId: deliveryDto.partner_id,
+  partnerName: deliveryDto.partner_name,
+  partnerCode: deliveryDto.partner_code,
   assignedAt: deliveryDto.assigned_at,
   pickupAt: deliveryDto.pickup_at,
   outForDeliveryAt: deliveryDto.out_for_delivery_at,

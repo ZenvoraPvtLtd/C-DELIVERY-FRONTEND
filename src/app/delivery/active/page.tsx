@@ -67,7 +67,7 @@ export default function ActiveDeliveriesPage() {
           onUpdateStatusClick={handleUpdateStatusClick}
           onReassignClick={setIsReassigning}
           onFailClick={setIsFailing}
-          onAssignClick={(order) => setIsAssigningId(order.id)}
+          onAssignClick={(order) => setIsAssigningId(order.orderId)}
         />
       )}
 
