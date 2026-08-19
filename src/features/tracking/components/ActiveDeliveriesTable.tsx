@@ -164,7 +164,7 @@ export function ActiveDeliveriesTable({
                   </td>
                   <td style={{ padding: 'var(--spacing-4)', textAlign: 'right', position: 'relative' }}>
                     <div style={{ display: 'flex', gap: 'var(--spacing-3)', justifyContent: 'flex-end', alignItems: 'center' }}>
-                      <Button variant="ghost" size="sm" onClick={() => router.push(`/delivery/orders/${order.id}`)}>
+                      <Button variant="ghost" size="sm" onClick={() => router.push(`/delivery/orders/${order.orderId}`)}>
                         Details
                       </Button>
                       

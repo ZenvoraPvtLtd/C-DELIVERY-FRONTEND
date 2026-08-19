@@ -50,7 +50,9 @@ export function useAssignmentDrawer(orderId: string | null, onAssignmentComplete
     setIsAssigning(true);
     setAssignmentError(null);
     try {
-      await assignmentService.assignPartner(orderId, selectedPartnerId);
+      const selectedPartner = partners.find(p => p.partner.id === selectedPartnerId)?.partner;
+      if (!selectedPartner) throw new Error("Selected partner not found in list.");
+      await assignmentService.assignPartner(orderId, selectedPartner.partnerId);
       onAssignmentComplete();
       close();
     } catch (err: any) {

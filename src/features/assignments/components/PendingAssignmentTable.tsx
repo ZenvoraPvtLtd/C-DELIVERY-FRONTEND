@@ -103,7 +103,7 @@ export function PendingAssignmentTable({
                   </td>
                   <td style={{ padding: 'var(--spacing-4)', textAlign: 'right' }}>
                     <div style={{ display: 'flex', gap: 'var(--spacing-3)', justifyContent: 'flex-end' }}>
-                      <Button variant="ghost" size="sm" onClick={() => router.push(`/delivery/orders/${order.id}`)}>
+                      <Button variant="ghost" size="sm" onClick={() => router.push(`/delivery/orders/${order.orderId}`)}>
                         View
                       </Button>
                     <ActionGuard permission="DELIVERY_ASSIGN">
