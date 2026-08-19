@@ -12,6 +12,9 @@ import mongoSanitize from 'express-mongo-sanitize';
 
 const app: Express = express();
 
+// Trust reverse proxies (Render, Vercel, Cloudflare, etc.)
+app.set('trust proxy', 1);
+
 // Security Middleware
 app.use(helmet());
 app.use(mongoSanitize()); // Prevent NoSQL injection
