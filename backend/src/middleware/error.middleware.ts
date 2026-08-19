@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { AppError } from '../utils/errors';
 
 export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
+  console.error(`[ERROR ${new Date().toISOString()}] ${req.method} ${req.originalUrl}:`, err.message || err);
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,

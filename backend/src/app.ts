@@ -19,6 +19,16 @@ app.set('trust proxy', 1);
 app.use(helmet());
 app.use(mongoSanitize()); // Prevent NoSQL injection
 
+// Request Logger Middleware (for Render / stdout logs)
+app.use((req, res, next) => {
+  const start = Date.now();
+  res.on('finish', () => {
+    const duration = Date.now() - start;
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl} - Status: ${res.statusCode} (${duration}ms)`);
+  });
+  next();
+});
+
 // Rate Limiting
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
