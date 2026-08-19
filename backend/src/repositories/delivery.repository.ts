@@ -1,7 +1,7 @@
 import Delivery, { IDelivery } from '../models/Delivery.model';
 import TimelineEvent, { ITimelineEvent } from '../models/TimelineEvent.model';
 import Assignment, { IAssignment } from '../models/Assignment.model';
-import { FilterQuery } from 'mongoose';
+import mongoose, { FilterQuery } from 'mongoose';
 
 export class DeliveryRepository {
   async getDeliveries(filters: any, page: number, limit: number) {
@@ -23,7 +23,7 @@ export class DeliveryRepository {
       query.status = { $in: ['DELIVERED', 'FAILED', 'CANCELLED'] };
     }
 
-    if (filters.partner_id) {
+    if (filters.partner_id && filters.partner_id !== 'ALL' && mongoose.isValidObjectId(filters.partner_id)) {
       query.partnerId = filters.partner_id;
     }
 

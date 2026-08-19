@@ -15,7 +15,7 @@ export const apiDeliveryRepository: IDeliveryRepository = {
     
     if (filters.search) params.append('search', filters.search);
     if (filters.status && filters.status !== 'ALL') params.append('status', filters.status);
-    if (filters.partnerId) params.append('partner_id', filters.partnerId);
+    if (filters.partnerId && filters.partnerId !== 'ALL') params.append('partner_id', filters.partnerId);
 
     const response = await apiClient.get<ApiListResponse<DeliveryDTO>>(`/deliveries?${params.toString()}`);
     

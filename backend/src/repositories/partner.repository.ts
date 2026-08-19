@@ -1,6 +1,6 @@
 import DeliveryPartner, { IDeliveryPartner } from '../models/DeliveryPartner.model';
 import Delivery from '../models/Delivery.model';
-import { FilterQuery } from 'mongoose';
+import mongoose, { FilterQuery } from 'mongoose';
 import { PartnerStatus, PartnerAvailability } from '../constants/partnerStatus';
 
 export class PartnerRepository {
@@ -43,6 +43,9 @@ export class PartnerRepository {
   }
 
   async findById(id: string): Promise<IDeliveryPartner | null> {
+    if (!mongoose.isValidObjectId(id)) {
+      return await this.findByPartnerCode(id);
+    }
     return await DeliveryPartner.findOne({ _id: id, isDeleted: false });
   }
 
