@@ -7,7 +7,7 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, 0));
 
 export const mockReportRepository: IReportRepository = {
   async getReportData(filters: DeliveryReportFilters): Promise<DeliveryOrder[]> {
-    await delay(500);
+    
     
     let filtered = [...mockDeliveries];
 

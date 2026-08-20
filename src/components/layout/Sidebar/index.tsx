@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { usePermissions } from '@/features/auth/usePermissions';
 import { Permission } from '@/types/auth';
+import { prefetchAssignments } from '@/features/assignments/hooks/useAssignmentWorkspace';
 import { 
   LayoutDashboard, 
   Package, 
@@ -29,6 +30,11 @@ interface SidebarProps {
 export function Sidebar({ collapsed, onCollapse, mobileOpen, onMobileClose }: SidebarProps) {
   const pathname = usePathname();
   const { can } = usePermissions();
+
+  React.useEffect(() => {
+    // Silently pre-warm the assignments cache so it loads instantly when clicked
+    prefetchAssignments();
+  }, []);
 
   type NavItem = { name?: string; href?: string; icon?: any; exact?: boolean; group?: string; permission?: Permission };
   const navItems: NavItem[] = [
@@ -75,6 +81,7 @@ export function Sidebar({ collapsed, onCollapse, mobileOpen, onMobileClose }: Si
               <Link 
                 key={index} 
                 href={item.href!} 
+                prefetch={true}
                 className={styles.navItem + (isActive ? ' ' + styles.active : '')}
                 title={collapsed ? item.name : undefined}
                 onClick={() => mobileOpen && onMobileClose()}

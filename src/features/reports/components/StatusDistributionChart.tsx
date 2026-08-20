@@ -45,7 +45,7 @@ export function StatusDistributionChart({ data }: StatusDistributionChartProps) 
         fontSize={13}
         fontWeight={600}
       >
-        {`${String(name).replace(/_/g, ' ')}: ${value} (${payload.percentage || Math.round(percent * 100)}%)`}
+        {`${String(name).replace(/_/g, ' ')}: ${value} (${Number(payload.percentage || percent * 100).toFixed(1)}%)`}
       </text>
     );
   };
@@ -57,13 +57,13 @@ export function StatusDistributionChart({ data }: StatusDistributionChartProps) 
       </CardHeader>
       <CardContent style={{ height: 350, padding: 0 }}>
         <ResponsiveContainer width="100%" height="100%">
-          <PieChart margin={{ top: 30, right: 40, bottom: 30, left: 40 }}>
+          <PieChart margin={{ top: 40, right: 120, bottom: 40, left: 120 }}>
             <Pie
               data={data}
               cx="50%"
               cy="50%"
-              innerRadius={70}
-              outerRadius={100}
+              innerRadius={60}
+              outerRadius={90}
               paddingAngle={3}
               dataKey="count"
               nameKey="status"
@@ -75,7 +75,7 @@ export function StatusDistributionChart({ data }: StatusDistributionChartProps) 
               ))}
             </Pie>
             <Tooltip 
-              formatter={(value: any, name: any, props: any) => [`${value} (${props.payload.percentage}%)`, String(name).replace(/_/g, ' ')]}
+              formatter={(value: any, name: any, props: any) => [`${value} (${Number(props.payload.percentage || props.percent * 100).toFixed(1)}%)`, String(name).replace(/_/g, ' ')]}
               contentStyle={{ borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)', fontSize: 13 }}
             />
           </PieChart>

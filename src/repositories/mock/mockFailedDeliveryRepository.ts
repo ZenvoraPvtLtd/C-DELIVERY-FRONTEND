@@ -8,7 +8,7 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, 0));
 
 export const mockFailedDeliveryRepository: IFailedDeliveryRepository = {
   async getFailedDeliveries(filters: FailedDeliveryFilters, page: number = 1, limit: number = 10): Promise<PaginatedDeliveries> {
-    await delay(300);
+    
     
     let filtered = mockDeliveries.filter(d => d.status === 'FAILED');
 
@@ -71,7 +71,7 @@ export const mockFailedDeliveryRepository: IFailedDeliveryRepository = {
   },
 
   async getFailedMetrics(): Promise<FailedDeliveryMetrics> {
-    await delay(200);
+    
     const failedDeliveries = mockDeliveries.filter(d => d.status === 'FAILED');
     
     let totalFailed = failedDeliveries.length;
@@ -96,7 +96,7 @@ export const mockFailedDeliveryRepository: IFailedDeliveryRepository = {
   },
 
   async markInvestigating(orderId: string, actor?: AuditActor | string): Promise<DeliveryOrder> {
-    await delay(300);
+    
     const order = mockDeliveries.find(d => d.id === orderId || d.orderId === orderId);
     if (!order) throw new Error('Order not found');
     
@@ -113,7 +113,7 @@ export const mockFailedDeliveryRepository: IFailedDeliveryRepository = {
   },
 
   async addInternalNote(orderId: string, note: string, actor?: AuditActor | string): Promise<DeliveryOrder> {
-    await delay(300);
+    
     const order = mockDeliveries.find(d => d.id === orderId || d.orderId === orderId);
     if (!order) throw new Error('Order not found');
     
@@ -131,7 +131,7 @@ export const mockFailedDeliveryRepository: IFailedDeliveryRepository = {
   },
 
   async resolveFailure(orderId: string, resolution: string, actor?: AuditActor | string): Promise<DeliveryOrder> {
-    await delay(300);
+    
     const order = mockDeliveries.find(d => d.id === orderId || d.orderId === orderId);
     if (!order) throw new Error('Order not found');
     
@@ -151,7 +151,7 @@ export const mockFailedDeliveryRepository: IFailedDeliveryRepository = {
   },
 
   async retryDelivery(orderId: string, actor?: AuditActor | string): Promise<DeliveryOrder> {
-    await delay(300);
+    
     const order = mockDeliveries.find(d => d.id === orderId || d.orderId === orderId);
     if (!order) throw new Error('Order not found');
     

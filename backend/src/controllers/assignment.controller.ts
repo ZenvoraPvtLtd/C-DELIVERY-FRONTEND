@@ -8,6 +8,11 @@ export const getEligiblePartners = async (req: Request, res: Response) => {
   return sendSuccess(res, result);
 };
 
+export const getAssignmentMetrics = async (req: Request, res: Response) => {
+  const result = await assignmentService.getMetrics();
+  return sendSuccess(res, result);
+};
+
 export const getEligibleReassignmentPartners = async (req: Request, res: Response) => {
   const search = req.query.search as string;
   // We need to exclude the current partner, which is usually resolved in the service.

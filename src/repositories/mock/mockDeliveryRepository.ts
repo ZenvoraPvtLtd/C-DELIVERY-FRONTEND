@@ -9,7 +9,7 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, 0));
 
 export const mockDeliveryRepository: IDeliveryRepository = {
   async getDeliveries(filters: any, page: number = 1, limit: number = 10): Promise<PaginatedDeliveries> {
-    await delay(500);
+    
     
     let filtered = [...mockDeliveries];
 
@@ -44,7 +44,7 @@ export const mockDeliveryRepository: IDeliveryRepository = {
   },
 
   async getDeliveryHistory(filters: any, page: number = 1, limit: number = 10): Promise<PaginatedDeliveries> {
-    await delay(500);
+    
     
     let filtered = mockDeliveries.filter(d => ['DELIVERED', 'FAILED', 'CANCELLED'].includes(d.status));
 
@@ -73,14 +73,14 @@ export const mockDeliveryRepository: IDeliveryRepository = {
   },
 
   async getDeliveryById(orderId: string): Promise<DeliveryOrder> {
-    await delay(400);
+    
     const order = mockDeliveries.find(d => d.orderId === orderId || d.id === orderId);
     if (!order) throw new Error('Delivery not found');
     return order;
   },
 
   async updateDeliveryStatus(orderId: string, newStatus: DeliveryStatus, actor: AuditActor | string = 'Current User', failureReason?: string): Promise<DeliveryOrder> {
-    await delay(600);
+    
     const index = mockDeliveries.findIndex(d => d.id === orderId);
     if (index === -1) throw new Error('Delivery not found');
 

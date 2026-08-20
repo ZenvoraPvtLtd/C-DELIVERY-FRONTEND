@@ -70,7 +70,7 @@ export const dashboardService = {
     const sortedRecent = [...deliveries].sort((a, b) => new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime()).slice(0, 5);
     const recentDeliveries: RecentDelivery[] = sortedRecent.map(d => ({
       orderId: d.orderId,
-      partner: d.partnerId || null,
+      partner: (d as any).partnerName || (d as any).partnerCode || d.partnerId || null,
       status: (d.status || '').replace(/_/g, ' '),
       time: new Date(d.orderDate).toLocaleTimeString()
     }));

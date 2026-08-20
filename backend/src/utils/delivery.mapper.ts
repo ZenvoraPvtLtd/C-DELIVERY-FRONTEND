@@ -14,7 +14,11 @@ export const mapDeliveryToDTO = (delivery: IDelivery) => {
     priority: delivery.priority,
     status: delivery.status,
     
-    partner_id: delivery.partnerId?.toString(),
+    partner_id: delivery.partnerId 
+      ? ((delivery.partnerId as any)._id ? (delivery.partnerId as any)._id.toString() : delivery.partnerId.toString())
+      : undefined,
+    partner_name: delivery.partnerId ? (delivery.partnerId as any).fullName : undefined,
+    partner_code: delivery.partnerId ? (delivery.partnerId as any).partnerCode : undefined,
     assigned_at: delivery.assignedAt?.toISOString(),
     pickup_at: delivery.pickupAt?.toISOString(),
     out_for_delivery_at: delivery.outForDeliveryAt?.toISOString(),

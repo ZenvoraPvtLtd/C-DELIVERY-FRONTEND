@@ -33,6 +33,8 @@ export interface DeliveryOrder {
   
   // Assignment & Tracking Info
   partnerId?: string;
+  partnerName?: string;
+  partnerCode?: string;
   assignedAt?: string;
   pickupAt?: string;
   outForDeliveryAt?: string;

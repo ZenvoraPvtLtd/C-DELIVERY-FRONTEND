@@ -10,11 +10,35 @@ import { mapDeliveryDtoToDomain, mapPartnerDtoToDomain } from '@/lib/api/mappers
 
 export const apiAssignmentRepository: IAssignmentRepository = {
   async getAllAssignments(filters: AssignmentWorkspaceFilters, page: number = 1, limit: number = 10): Promise<PaginatedDeliveries> {
-    throw new Error('Not implemented for API yet');
+    const params = new URLSearchParams({
+      page: page.toString(),
+      limit: limit.toString()
+    });
+    
+    if (filters.search) params.append('search', filters.search);
+    if (filters.status && filters.status !== 'ALL') {
+      let mappedStatus = filters.status;
+      if (mappedStatus === 'COMPLETED') mappedStatus = 'DELIVERED';
+      if (mappedStatus === 'REASSIGNED') mappedStatus = 'ASSIGNED';
+      params.append('status', mappedStatus);
+    }
+    if (filters.partnerId && filters.partnerId !== 'ALL') params.append('partner_id', filters.partnerId);
+    if (filters.dateRange && filters.dateRange !== 'ALL') params.append('dateRange', filters.dateRange);
+
+    const response = await apiClient.get<ApiListResponse<DeliveryDTO>>(`/deliveries?${params.toString()}`);
+    
+    return {
+      data: response.data.map(d => mapDeliveryDtoToDomain(d)),
+      total: response.meta.total,
+      page: response.meta.page,
+      limit: response.meta.pageSize,
+      totalPages: response.meta.totalPages
+    };
   },
 
   async getAssignmentMetrics(): Promise<AssignmentMetrics> {
-    throw new Error('Not implemented for API yet');
+    const response = await apiClient.get<ApiResponse<AssignmentMetrics>>(`/delivery/assignments/metrics`);
+    return response.data;
   },
   async getPendingAssignments(filters: AssignmentFilters, page: number = 1, limit: number = 10): Promise<PaginatedDeliveries> {
     const params = new URLSearchParams({

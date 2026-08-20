@@ -14,6 +14,8 @@ export interface DeliveryDTO {
   status: DeliveryStatus;
   
   partner_id?: string;
+  partner_name?: string;
+  partner_code?: string;
   assigned_at?: string;
   pickup_at?: string;
   out_for_delivery_at?: string;

@@ -107,7 +107,7 @@ export function PendingAssignmentTable({
                         View
                       </Button>
                     <ActionGuard permission="DELIVERY_ASSIGN">
-                      <Button size="sm" onClick={() => onAssignClick(order.id)}>
+                      <Button size="sm" onClick={() => onAssignClick(order.orderId)}>
                         Assign Partner
                       </Button>
                     </ActionGuard>
