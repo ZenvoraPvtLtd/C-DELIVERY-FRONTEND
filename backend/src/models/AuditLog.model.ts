@@ -45,5 +45,6 @@ const AuditLogSchema: Schema = new Schema({
 // For fast log fetching and filtering
 AuditLogSchema.index({ 'actor.userId': 1 });
 AuditLogSchema.index({ module: 1, timestamp: -1 });
+AuditLogSchema.index({ timestamp: -1, action: 1 });
 
 export default mongoose.model<IAuditLog>('AuditLog', AuditLogSchema);

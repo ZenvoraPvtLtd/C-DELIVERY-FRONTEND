@@ -64,5 +64,10 @@ const DeliverySchema: Schema = new Schema({
 // Setup compound indexes for common queries
 DeliverySchema.index({ status: 1, priority: 1 });
 DeliverySchema.index({ partnerId: 1, status: 1 });
+DeliverySchema.index({ isDeleted: 1, status: 1, orderDate: -1 });
+DeliverySchema.index({ isDeleted: 1, partnerId: 1, status: 1 });
+DeliverySchema.index({ isDeleted: 1, orderId: 1 });
+DeliverySchema.index({ isDeleted: 1, priority: 1 });
+DeliverySchema.index({ isDeleted: 1, orderDate: -1 });
 
 export default mongoose.model<IDelivery>('Delivery', DeliverySchema);

@@ -28,7 +28,7 @@ const DeliveryPartnerSchema: Schema = new Schema({
   timestamps: true 
 });
 
-// Adding a virtual for todaysDeliveries if needed to be queried dynamically, 
-// otherwise this would be computed by aggregation in the service layer.
+DeliveryPartnerSchema.index({ isDeleted: 1, status: 1, availability: 1 });
+DeliveryPartnerSchema.index({ isDeleted: 1, createdAt: -1 });
 
 export default mongoose.model<IDeliveryPartner>('DeliveryPartner', DeliveryPartnerSchema);

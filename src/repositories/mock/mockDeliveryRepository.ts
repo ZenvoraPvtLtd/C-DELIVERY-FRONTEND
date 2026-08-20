@@ -1,7 +1,6 @@
 import { IDeliveryRepository } from '../interfaces/IDeliveryRepository';
 import { DeliveryOrder, DeliveryStatus, PaginatedDeliveries } from '@/types/delivery';
 import { mockDeliveries } from '@/services/deliveries/deliveryMockData';
-import { canTransition } from '@/lib/delivery/statusTransitions';
 import { mockPartners } from '@/services/partners/partnerMockData';
 import { auditService } from '@/services/audit/auditService';
 import { AuditActor } from '@/types/audit';
@@ -26,7 +25,7 @@ export const mockDeliveryRepository: IDeliveryRepository = {
 
     if (filters.status && filters.status !== 'ALL') {
       filtered = filtered.filter(d => d.status === filters.status);
-    } else {
+    } else if (!filters.status) {
       filtered = filtered.filter(d => !['DELIVERED', 'FAILED', 'CANCELLED'].includes(d.status));
     }
 
@@ -125,7 +124,67 @@ export const mockDeliveryRepository: IDeliveryRepository = {
     }
 
     return order;
+  },
+
+  async getDashboardSummary(filters: any): Promise<any> {
+    await delay(200);
+    const total = mockDeliveries.length;
+    const pending = mockDeliveries.filter(d => d.status === 'WAITING_FOR_ASSIGNMENT').length;
+    const active = mockDeliveries.filter(d => ['ASSIGNED', 'PICKED_UP', 'OUT_FOR_DELIVERY'].includes(d.status)).length;
+    const completed = mockDeliveries.filter(d => d.status === 'DELIVERED').length;
+    const failed = mockDeliveries.filter(d => d.status === 'FAILED').length;
+
+    const totalActivePartners = mockPartners.filter(p => p.status === 'ACTIVE').length;
+    const availablePartners = mockPartners.filter(p => p.status === 'ACTIVE' && p.availability === 'AVAILABLE').length;
+    const busyPartners = mockPartners.filter(p => p.status === 'ACTIVE' && p.availability === 'BUSY').length;
+    const inactivePartners = mockPartners.filter(p => p.availability === 'INACTIVE' || p.status !== 'ACTIVE').length;
+
+    const getPct = (cnt: number) => total > 0 ? Math.round((cnt / total) * 100) : 0;
+
+    const sortedRecent = [...mockDeliveries].sort((a, b) => new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime()).slice(0, 5);
+
+    return {
+      summary: {
+        kpis: [
+          { id: '1', label: 'Total Deliveries', value: total, trend: 'up', trendPercentage: 12, comparisonLabel: 'vs last week' },
+          { id: '2', label: 'Pending Assignment', value: pending, trend: 'down', trendPercentage: 2, comparisonLabel: 'vs last week' },
+          { id: '3', label: 'Active Deliveries', value: active, trend: 'up', trendPercentage: 5, comparisonLabel: 'vs last week' },
+          { id: '4', label: 'Completed Today', value: completed, trend: 'up', trendPercentage: 18, comparisonLabel: 'vs last week' },
+          { id: '5', label: 'Failed/Exceptions', value: failed, trend: 'down', trendPercentage: 1, comparisonLabel: 'vs last week' },
+          { id: '6', label: 'Avg. Delivery Time', value: '42m', trend: 'down', trendPercentage: 5, comparisonLabel: 'vs last week' },
+          { id: '7', label: 'Active Partners', value: totalActivePartners, trend: 'neutral', trendPercentage: 0, comparisonLabel: 'vs last week' },
+          { id: '8', label: 'Customer Rating', value: '4.8', trend: 'up', trendPercentage: 2, comparisonLabel: 'vs last week' }
+        ],
+        totalDeliveries: total,
+        completed,
+        active,
+        pending,
+        failed
+      },
+      pipeline: [
+        { status: 'WAITING_FOR_ASSIGNMENT', label: 'Waiting', count: pending, percentage: getPct(pending) },
+        { status: 'ASSIGNED', label: 'Assigned', count: mockDeliveries.filter(d => d.status === 'ASSIGNED').length, percentage: getPct(mockDeliveries.filter(d => d.status === 'ASSIGNED').length) },
+        { status: 'PICKED_UP', label: 'Picked Up', count: mockDeliveries.filter(d => d.status === 'PICKED_UP').length, percentage: getPct(mockDeliveries.filter(d => d.status === 'PICKED_UP').length) },
+        { status: 'OUT_FOR_DELIVERY', label: 'Out for Delivery', count: mockDeliveries.filter(d => d.status === 'OUT_FOR_DELIVERY').length, percentage: getPct(mockDeliveries.filter(d => d.status === 'OUT_FOR_DELIVERY').length) },
+        { status: 'DELIVERED', label: 'Delivered', count: completed, percentage: getPct(completed) }
+      ],
+      trends: [
+        { time: '08:00', Assigned: 12, 'Out for Delivery': 5, Delivered: 0, Failed: 0 },
+        { time: '10:00', Assigned: 25, 'Out for Delivery': 15, Delivered: 10, Failed: 1 },
+        { time: '12:00', Assigned: 45, 'Out for Delivery': 30, Delivered: 25, Failed: 2 },
+        { time: '14:00', Assigned: 60, 'Out for Delivery': 48, Delivered: 40, Failed: 3 }
+      ],
+      recentDeliveries: sortedRecent.map(d => ({
+        orderId: d.orderId,
+        partner: d.partnerId || null,
+        status: d.status.replace(/_/g, ' '),
+        time: new Date(d.orderDate).toLocaleTimeString()
+      })),
+      partnerAvailability: {
+        available: availablePartners,
+        busy: busyPartners,
+        inactive: inactivePartners
+      }
+    };
   }
 };
-
-

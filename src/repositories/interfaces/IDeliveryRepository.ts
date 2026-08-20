@@ -6,4 +6,5 @@ export interface IDeliveryRepository {
   getDeliveryHistory(filters: any, page?: number, limit?: number): Promise<PaginatedDeliveries>;
   getDeliveryById(orderId: string): Promise<DeliveryOrder>;
   updateDeliveryStatus(orderId: string, status: DeliveryStatus, actor: AuditActor | string, failureReason?: string): Promise<DeliveryOrder>;
+  getDashboardSummary?: (filters: any) => Promise<any>;
 }

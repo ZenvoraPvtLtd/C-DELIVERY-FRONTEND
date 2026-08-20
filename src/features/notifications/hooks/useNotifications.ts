@@ -3,10 +3,14 @@ import { notificationService } from '@/services/notifications/notificationServic
 import { NotificationDTO } from '@/types/notification';
 import { useAuth } from '@/features/auth/AuthContext';
 
+let lastUnreadFetchTime = 0;
+let cachedUnreadCount = 0;
+const UNREAD_CACHE_TTL_MS = 15000;
+
 export function useNotifications() {
   const { isAuthenticated } = useAuth();
   const [notifications, setNotifications] = useState<NotificationDTO[]>([]);
-  const [unreadCount, setUnreadCount] = useState(0);
+  const [unreadCount, setUnreadCount] = useState(cachedUnreadCount);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -17,6 +21,8 @@ export function useNotifications() {
       const res = await notificationService.getNotifications(page, 20);
       setNotifications(res.data);
       const count = await notificationService.getUnreadCount();
+      cachedUnreadCount = count;
+      lastUnreadFetchTime = Date.now();
       setUnreadCount(count);
     } catch (err: any) {
       setError(err.message || 'Failed to fetch notifications');
@@ -25,10 +31,17 @@ export function useNotifications() {
     }
   }, [isAuthenticated]);
 
-  const fetchUnreadCount = useCallback(async () => {
+  const fetchUnreadCount = useCallback(async (force = false) => {
     if (!isAuthenticated) return;
+    const now = Date.now();
+    if (!force && now - lastUnreadFetchTime < UNREAD_CACHE_TTL_MS) {
+      setUnreadCount(cachedUnreadCount);
+      return;
+    }
     try {
       const count = await notificationService.getUnreadCount();
+      cachedUnreadCount = count;
+      lastUnreadFetchTime = now;
       setUnreadCount(count);
     } catch (err) {
       console.error('Failed to fetch unread count', err);
@@ -39,7 +52,8 @@ export function useNotifications() {
     try {
       await notificationService.markAsRead(id);
       setNotifications(prev => prev.map(n => n.id === id ? { ...n, isRead: true } : n));
-      setUnreadCount(prev => Math.max(0, prev - 1));
+      cachedUnreadCount = Math.max(0, cachedUnreadCount - 1);
+      setUnreadCount(cachedUnreadCount);
     } catch (err) {
       console.error('Failed to mark as read', err);
     }
@@ -49,6 +63,7 @@ export function useNotifications() {
     try {
       await notificationService.markAllAsRead();
       setNotifications(prev => prev.map(n => ({ ...n, isRead: true })));
+      cachedUnreadCount = 0;
       setUnreadCount(0);
     } catch (err) {
       console.error('Failed to mark all as read', err);
@@ -58,7 +73,6 @@ export function useNotifications() {
   useEffect(() => {
     if (isAuthenticated) {
       fetchUnreadCount();
-      // Polling could be added here later, but standard refreshing is fine for now
     }
   }, [isAuthenticated, fetchUnreadCount]);
 

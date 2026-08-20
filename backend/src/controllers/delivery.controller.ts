@@ -18,6 +18,13 @@ export const getDeliveries = async (req: Request, res: Response) => {
   return sendSuccess(res, result.data, result.meta);
 };
 
+export const getDashboardSummary = async (req: Request, res: Response) => {
+  const filters: any = {};
+  if (req.query.dateRange) filters.dateRange = req.query.dateRange;
+  const result = await deliveryService.getDashboardSummary(filters);
+  return sendSuccess(res, result);
+};
+
 export const getDeliveryById = async (req: Request, res: Response) => {
   const orderId = req.params.orderId;
   const deliveryData = await deliveryService.getDeliveryById(orderId);

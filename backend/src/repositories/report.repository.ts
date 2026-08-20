@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 
 export class ReportRepository {
   private buildMatchFilter(filters: any) {
-    const match: any = {};
+    const match: any = { isDeleted: false };
     if (filters.status && filters.status !== 'ALL') {
       match.status = filters.status;
     }

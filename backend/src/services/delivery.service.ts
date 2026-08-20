@@ -26,6 +26,10 @@ export class DeliveryService {
     };
   }
 
+  async getDashboardSummary(filters: any) {
+    return await deliveryRepository.getDashboardSummary(filters);
+  }
+
   async getDeliveryById(orderId: string) {
     const delivery = await deliveryRepository.findByOrderId(orderId);
     if (!delivery) {

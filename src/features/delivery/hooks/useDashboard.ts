@@ -19,19 +19,13 @@ export function useDashboard() {
     setIsLoading(true);
     setError(null);
     try {
-      const [sum, pip, trd, rec, pa] = await Promise.all([
-        dashboardService.getDashboardSummary(filters),
-        dashboardService.getDeliveryPipeline(filters),
-        dashboardService.getDeliveryTrends(filters),
-        dashboardService.getRecentDeliveries(filters),
-        dashboardService.getPartnerAvailability(filters)
-      ]);
+      const res = await dashboardService.getFullDashboard(filters);
       
-      setSummary(sum);
-      setPipeline(pip);
-      setTrends(trd);
-      setRecentDeliveries(rec);
-      setPartnerAvailability(pa);
+      setSummary(res.summary);
+      setPipeline(res.pipeline);
+      setTrends(res.trends);
+      setRecentDeliveries(res.recentDeliveries);
+      setPartnerAvailability(res.partnerAvailability);
     } catch (err) {
       setError('Something went wrong while loading delivery data.');
     } finally {

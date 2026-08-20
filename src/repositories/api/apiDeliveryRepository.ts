@@ -73,5 +73,16 @@ export const apiDeliveryRepository: IDeliveryRepository = {
     }>>(`/orders/${orderId}/delivery/status`, requestData);
     
     return mapDeliveryDtoToDomain(response.data.delivery, response.data.timeline, response.data.assignments);
+  },
+
+  async getDashboardSummary(filters: any): Promise<any> {
+    const params = new URLSearchParams();
+    if (filters.dateRange) params.append('dateRange', filters.dateRange);
+    try {
+      const response = await apiClient.get<ApiResponse<any>>(`/deliveries/dashboard-summary?${params.toString()}`);
+      return response?.data || null;
+    } catch {
+      return null;
+    }
   }
 };
